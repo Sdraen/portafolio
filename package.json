@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint ."
+    "export": "next export -o docs",
+    "build:pages": "npm run build && npm run export && cp CNAME docs/CNAME || true && touch docs/.nojekyll"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
