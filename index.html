@@ -12,6 +12,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -128,6 +132,17 @@
             margin: 0.5rem 0;
         }
 
+        .contact-info a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-info a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
         footer {
             background-color: #333;
             color: white;
@@ -213,9 +228,9 @@
     <section id="contact">
         <h2>Contacto</h2>
         <div class="contact-info">
-            <p><strong>Email:</strong> tu-email@ejemplo.com</p>
-            <p><strong>LinkedIn:</strong> linkedin.com/in/tu-perfil</p>
-            <p><strong>GitHub:</strong> github.com/tu-usuario</p>
+            <p><strong>Email:</strong> <a href="mailto:tu-email@ejemplo.com">tu-email@ejemplo.com</a></p>
+            <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/tu-perfil" target="_blank">linkedin.com/in/tu-perfil</a></p>
+            <p><strong>GitHub:</strong> <a href="https://github.com/tu-usuario" target="_blank">github.com/tu-usuario</a></p>
             <p><strong>Ubicación:</strong> Tu Ciudad, País</p>
         </div>
     </section>
