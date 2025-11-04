@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portafolio profesional - Desarrollador Web">
+    <title>Mi Portafolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background-color: #333;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            margin: 0 0.5rem;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #667eea;
+            border-radius: 4px;
+        }
+
+        section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem 1rem;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .about-content {
+            background-color: #f4f4f4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .project-card h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .skill-tag {
+            background-color: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .contact-info {
+            background-color: #f4f4f4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .contact-info p {
+            margin: 0.5rem 0;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            nav a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Mi Portafolio</h1>
+        <p>Desarrollador Web | Diseñador | Creativo</p>
+    </header>
+
+    <nav>
+        <a href="#about">Sobre Mí</a>
+        <a href="#projects">Proyectos</a>
+        <a href="#skills">Habilidades</a>
+        <a href="#contact">Contacto</a>
+    </nav>
+
+    <section id="about">
+        <h2>Sobre Mí</h2>
+        <div class="about-content">
+            <p>¡Hola! Soy un desarrollador web apasionado por crear experiencias digitales increíbles. 
+            Me especializo en desarrollo frontend y backend, con experiencia en diversas tecnologías modernas.</p>
+            <p>Mi objetivo es construir soluciones web innovadoras que combinen funcionalidad, diseño y 
+            rendimiento para ofrecer la mejor experiencia al usuario.</p>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Proyectos</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>Proyecto 1</h3>
+                <p>Descripción de tu primer proyecto destacado. Explica las tecnologías utilizadas y los 
+                desafíos que superaste.</p>
+            </div>
+            <div class="project-card">
+                <h3>Proyecto 2</h3>
+                <p>Descripción de tu segundo proyecto. Muestra tu versatilidad y capacidad para trabajar 
+                con diferentes stacks tecnológicos.</p>
+            </div>
+            <div class="project-card">
+                <h3>Proyecto 3</h3>
+                <p>Descripción de tu tercer proyecto. Destaca los resultados obtenidos y el impacto 
+                generado.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Habilidades</h2>
+        <div class="skills-list">
+            <span class="skill-tag">HTML5</span>
+            <span class="skill-tag">CSS3</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">React</span>
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">Responsive Design</span>
+            <span class="skill-tag">UI/UX</span>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contacto</h2>
+        <div class="contact-info">
+            <p><strong>Email:</strong> tu-email@ejemplo.com</p>
+            <p><strong>LinkedIn:</strong> linkedin.com/in/tu-perfil</p>
+            <p><strong>GitHub:</strong> github.com/tu-usuario</p>
+            <p><strong>Ubicación:</strong> Tu Ciudad, País</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Mi Portafolio. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
