@@ -1,11 +1,16 @@
-/* Tailwind v4 */
 @import "tailwindcss";
+@import "tw-animate-css";
 
-/* Habilita variante .dark en cualquier descendiente */
+/* Mantén esta custom variant si la usas en Tailwind v4 */
 @custom-variant dark (&:is(.dark *));
 
-/* ===== Paleta en variables “tuyas” (modo claro) ===== */
+/* =========================
+   PALETA CLARO / OSCURO
+   + habilitamos color-scheme (pinta más rápido y correcto)
+   ========================= */
 :root {
+  color-scheme: light;
+
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
 
@@ -28,7 +33,7 @@
   --accent-foreground: oklch(0.205 0 0);
 
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
 
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
@@ -52,8 +57,9 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-/* ===== Overrides en modo oscuro ===== */
 .dark {
+  color-scheme: dark;
+
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
 
@@ -76,7 +82,7 @@
   --accent-foreground: oklch(0.985 0 0);
 
   --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.985 0 0);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
 
   --border: oklch(0.269 0 0);
   --input: oklch(0.269 0 0);
@@ -98,13 +104,8 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
-/* ===== Mapea tus variables a los tokens de Tailwind v4 ===== */
-@theme {
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", "Courier New", monospace;
-
-  --radius: 0.5rem;
-
+/* Mapeo a Tailwind variables */
+@theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
@@ -154,15 +155,92 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* ===== Base ===== */
+/* =========================
+   BASE (optimizado)
+   - Quitamos outline global en * (caro).
+   - Deja solo el color de borde por defecto.
+   - Añadimos a11y: focus-visible con outline.
+   ========================= */
 @layer base {
-  * { @apply border-border outline-ring/50; }
-  body { @apply bg-background text-foreground; }
+  *, ::before, ::after {
+    @apply border-border;
+  }
+
+  html, body { height: 100%; }
+
+  body {
+    @apply bg-background text-foreground;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
 }
 
-/* UX extra */
+/* =========================
+   UX extra (cauto)
+   - Smooth scroll, pero se desactiva con reduced motion.
+   ========================= */
 html { scroll-behavior: smooth; }
-::-webkit-scrollbar{ width:8px; }
-::-webkit-scrollbar-track{ background:var(--color-background); }
-::-webkit-scrollbar-thumb{ background:var(--color-muted); border-radius:9999px; }
-::-webkit-scrollbar-thumb:hover{ background:var(--color-muted-foreground); }
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-background); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-muted);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-muted-foreground); }
+
+/* =========================
+   Utils de rendimiento
+   - content-visibility + contain-intrinsic-size
+   - will-change/paint containment
+   ========================= */
+@layer utilities {
+  .cv        { content-visibility: auto; contain-intrinsic-size: 1px 800px; }
+  .cv-sm     { content-visibility: auto; contain-intrinsic-size: 1px 600px; }
+  .cv-lg     { content-visibility: auto; contain-intrinsic-size: 1px 1000px; }
+
+  .gpu       { transform: translateZ(0); will-change: transform; }
+  .paint-safe{ contain: paint; }
+
+  /* Evita filtros caros si alguna vez se te cuela un backdrop */
+  .no-backdrop { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}
+
+/* =========================
+   Animaciones (ligeras)
+   - Mantén tus keyframes, pero
+     respeta reduced motion de forma agresiva.
+   ========================= */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-20px); }
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-glow  { animation: glow 3s ease-in-out infinite; }
+
+/* Reduced motion: hard cut (mejor rendimiento) */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *, ::before, ::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .animate-float, .animate-glow {
+    animation: none !important;
+  }
+}
