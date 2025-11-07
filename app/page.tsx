@@ -42,27 +42,39 @@ export default function Portfolio() {
         <div className="min-h-screen bg-background overflow-hidden">
           {/* Background muy liviano */}
           <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-            {/* Desktop: blobs con scale lento */}
+            {/* Desktop: blobs con scale lento (sin blur) */}
             <m.div
-              className="hidden md:block absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-primary/5 via-transparent to-transparent rounded-full blur-sm transform-gpu"
-              animate={prefersReduced ? undefined : { scale: [1, 1.08, 1] }}
-              transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+              className="hidden md:block absolute -top-1/2 -right-1/2 w-full h-full
+                         bg-gradient-to-br from-primary/8 via-transparent to-transparent
+                         rounded-full transform-gpu paint-safe"
+              animate={prefersReduced ? undefined : { scale: [1, 1.04, 1] }}
+              transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
               style={{ willChange: prefersReduced ? undefined : "transform" }}
             />
             <m.div
-              className="hidden md:block absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-accent/5 via-transparent to-transparent rounded-full blur-sm transform-gpu"
-              animate={prefersReduced ? undefined : { scale: [1, 1.1, 1] }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              className="hidden md:block absolute -bottom-1/2 -left-1/2 w-full h-full
+                         bg-gradient-to-tr from-accent/8 via-transparent to-transparent
+                         rounded-full transform-gpu paint-safe"
+              animate={prefersReduced ? undefined : { scale: [1, 1.05, 1] }}
+              transition={{ duration: 34, repeat: Infinity, ease: "linear" }}
               style={{ willChange: prefersReduced ? undefined : "transform" }}
             />
-            {/* Mobile: sin animación (estáticos) */}
-            <div className="md:hidden absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-primary/5 via-transparent to-transparent rounded-full blur-[6px]" />
-            <div className="md:hidden absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-accent/5 via-transparent to-transparent rounded-full blur-[6px]" />
+            {/* Mobile: blobs estáticos (sin blur) */}
+            <div
+              className="md:hidden absolute -top-1/2 -right-1/2 w-full h-full
+                         bg-gradient-to-br from-primary/8 via-transparent to-transparent
+                         rounded-full"
+            />
+            <div
+              className="md:hidden absolute -bottom-1/2 -left-1/2 w-full h-full
+                         bg-gradient-to-tr from-accent/8 via-transparent to-transparent
+                         rounded-full"
+            />
           </div>
 
-          {/* Nav sin backdrop-blur y sin motion por link */}
+          {/* Nav sin transparencia para evitar blending constante */}
           <m.nav
-            className="fixed top-0 w-full z-50 border-b border-border bg-background/90"
+            className="fixed top-0 w-full z-50 border-b border-border bg-background"
             initial={{ y: -72, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ ...SPRING, bounce: 0 }}
@@ -144,9 +156,9 @@ export default function Portfolio() {
                   <span className="text-muted-foreground">Castro</span>
                 </m.h1>
 
-              <m.p
-                className="text-xl text-muted-foreground max-w-2xl text-pretty leading-relaxed"
-                initial="hidden"
+                <m.p
+                  className="text-xl text-muted-foreground max-w-2xl text-pretty leading-relaxed"
+                  initial="hidden"
                   animate="visible"
                   variants={fadeInUp}
                   transition={{ ...SPRING, delay: 0.16 }}
