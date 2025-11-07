@@ -285,7 +285,7 @@ export default function Portfolio() {
                 {[
                   { title: "PERRINES UBB", desc: "Proyecto colaborativo UBB para gestión y publicación de contenidos académicos.", url: "https://github.com/B4yr0ndg/PERRINES-UBB-", tags: ["JavaScript", "CSS", "HTML"] },
                   { title: "OpenCV App", desc: "Aplicación móvil con procesamiento de imágenes usando OpenCV.", url: "https://github.com/Sdraen/opencv-app-python", tags: ["OpenCV", "Android", "C++/Java"] },
-                  { title: "Sistema Avícola IECI", desc: "Frontend React/Next y backend Node/Express. Despliegue con Docker.", url: "https://github.com/Sdraen/avicola-app", tags: ["TypeScript", "React", "Express", "Docker"] },
+                  { title: "Sistema Avícola IECI", desc: "Proyecto Tesis de Ingeniería en Ejecución Informática.", url: "https://github.com/Sdraen/avicola-app", tags: ["TypeScript", "React", "Express", "Docker"] },
                 ].map((project) => (
                   <a
                     key={project.title}
