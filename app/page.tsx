@@ -89,7 +89,7 @@ export default function Portfolio() {
                   ATC
                 </a>
                 <div className="flex gap-6">
-                  {["Sobre mí", "Proyectos", "Habilidades", "Contacto"].map((item) => (
+                  {["Sobre mí", "Proyectos", "Contacto"].map((item) => (
                     <a
                       key={item}
                       href={`#${item.toLowerCase().replace(" ", "")}`}
