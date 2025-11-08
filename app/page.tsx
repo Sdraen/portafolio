@@ -324,46 +324,6 @@ export default function Portfolio() {
 
           <Separator className="max-w-6xl mx-auto" />
 
-          {/* Habilidades */}
-          <section
-            id="habilidades"
-            className="py-20 px-6 [content-visibility:auto] [contain-intrinsic-size:1px_800px]"
-          >
-            <div className="max-w-6xl mx-auto">
-              <m.h2
-                className="text-3xl font-bold mb-12 text-balance"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.25 }}
-                variants={fadeInUp}
-                transition={SPRING}
-              >
-                Habilidades técnicas
-              </m.h2>
-
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[
-                  { title: "Frontend", color: "text-primary", skills: ["HTML5", "CSS3", "JavaScript", "TypeScript", "React", "Next.js", "Tailwind CSS"] },
-                  { title: "Backend", color: "text-primary", skills: ["Node.js", "Express", "REST APIs", "PostgreSQL", "MongoDB", "Authentication"] },
-                  { title: "Herramientas", color: "text-yellow-500", skills: ["Git", "GitHub", "VS Code", "Docker", "Postman", "Responsive Design", "UI/UX"] },
-                ].map((category) => (
-                  <div key={category.title}>
-                    <h3 className={`text-lg font-semibold mb-4 ${category.color}`}>{category.title}</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {category.skills.map((skill) => (
-                        <div key={skill} className="transition-transform hover:-translate-y-0.5">
-                          <Badge className="cursor-default hover:bg-primary/90 transition-colors">{skill}</Badge>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          <Separator className="max-w-6xl mx-auto" />
-
           {/* Contacto */}
           <section
             id="contacto"
