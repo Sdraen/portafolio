@@ -39,3 +39,11 @@
   .story-footer p,.bento-skill p,.project-copy p,.process-list p{font-size:14px}
   .contact-inner>p{font-size:15px}
 }
+
+/* Evita que el CTA final se recorte en iPhone y otros móviles estrechos. */
+@media(max-width:480px){
+  .contact-section{padding-right:16px;padding-left:16px}
+  .contact-inner{min-width:0}
+  .contact-inner h2{font-size:clamp(3rem,13.2vw,3.55rem);line-height:.92;letter-spacing:-.055em}
+  .contact-inner h2 em{display:block;font-size:.88em;line-height:1;letter-spacing:-.045em;white-space:nowrap}
+}
