@@ -1989,6 +1989,55 @@ button {
     transition-duration: .01ms !important;
   }
 }
+.nav-links a,.button {
+  font-size: 14px;
+}
+.nav-status,.hero-kicker,.section-index,.code-top span,.code-status,.project-meta,.contact-kicker {
+  font-size: 12px;
+}
+.story-footer p,.bento-skill p,.project-copy p,.process-list p {
+  font-size: 15px;
+  line-height: 1.65;
+}
+.story-footer p {
+  color: rgba(255,255,255,.74);
+}
+.bento-skill p {
+  opacity: .78;
+}
+.project-copy p,.process-list p {
+  color: rgba(17,17,15,.72);
+}
+.story-footer>span,.bento-skill div>span,.process-list article>span,.process-list article>i,.contact-footer {
+  font-size: 11px;
+}
+.code-lines {
+  font-size: clamp(12px,1.1vw,14px);
+}
+.tag-list span {
+  font-size: 11px;
+}
+.contact-inner>p {
+  font-size: 16px;
+  color: rgba(255,255,255,.7);
+}
+.contact-footer {
+  color: rgba(255,255,255,.68);
+}
+.vision-label {
+  font-size: 10px;
+}
+@media (max-width:680px) {
+  .button {
+    font-size: 12px;
+  }
+  .story-footer p,.bento-skill p,.project-copy p,.process-list p {
+    font-size: 14px;
+  }
+  .contact-inner>p {
+    font-size: 15px;
+  }
+}
 @property --tw-rotate-x {
   syntax: "*";
   inherits: false;

@@ -19,3 +19,23 @@
 @media(max-width:900px){.hero-sticker{display:none}.hero-bottom{width:100%;gap:30px}.section-heading{grid-template-columns:1fr;gap:20px}.section-index{padding:0}.bento-story{grid-column:span 6}.bento-code,.bento-skill{grid-column:span 3}.projects-heading>a{position:static;width:fit-content;margin-top:20px}.process-list article{grid-template-columns:.2fr .8fr 1.2fr auto}.process-list article>i{display:none}}
 @media(max-width:680px){html{scroll-padding-top:85px}.cursor-glow{display:none}.topbar-wrap{top:10px;padding:0 12px}.topbar{height:57px;padding-left:16px}.nav-links,.nav-status{display:none}.menu-button{width:41px;height:41px;padding:0;border:0;border-radius:50%;color:white;background:var(--ink);display:grid;place-items:center}.menu-button svg{width:19px}.mobile-menu{width:calc(100% - 24px);margin:8px auto 0;padding:12px;border:1px solid var(--ink);border-radius:22px;background:var(--lime);box-shadow:5px 6px 0 var(--ink);display:block}.mobile-menu a{padding:15px 8px;border-bottom:1px solid rgba(17,17,15,.18);display:flex;justify-content:space-between;font-size:22px;font-weight:750}.mobile-menu a:last-child{border:0}.mobile-menu svg{width:20px}.hero-section{min-height:870px;padding:130px 20px 80px;align-items:start}.hero-kicker{justify-content:flex-start;margin:20px 0 50px;font-size:10px}.hero-kicker span{display:none}.hero-title{font-size:clamp(3.5rem,18.5vw,5rem);line-height:.94;letter-spacing:-.035em;text-align:left}.hero-title>span{padding-bottom:.13em}.hero-title .title-shift{padding-left:0}.hero-bottom{margin-top:55px;flex-direction:column;align-items:stretch}.hero-intro{gap:14px}.intro-line{width:25px}.hero-actions{display:grid;grid-template-columns:1fr 1fr}.button{padding:0 14px;font-size:11px}.ticker{padding:14px 0}.ticker-track span{padding:0 18px;gap:36px;font-size:11px}.section{width:calc(100% - 28px);padding:100px 0}.section-heading{margin-bottom:45px}.section-heading h2{font-size:2.8rem}.about-grid{gap:12px}.bento{border-radius:20px}.bento-story,.bento-code,.bento-skill{grid-column:span 6}.bento-story{min-height:510px;padding:25px}.large-copy{font-size:2.25rem}.story-footer{align-items:flex-start;flex-direction:column}.story-footer>span{text-align:left}.bento-code{min-height:380px}.bento-skill{min-height:235px}.projects-section{padding-top:65px}.projects-grid{grid-template-columns:1fr}.project-card:first-child{grid-column:span 1}.project-art,.project-card:first-child .project-art{height:290px}.project-meta{grid-template-columns:.5fr 1fr auto}.dashboard-shell{width:86%;height:70%;grid-template-columns:20% 1fr}.dashboard-main{padding:15px}.dash-metric{margin-top:20px}.dash-chart{height:65px;margin-top:15px}.float-chip{padding:7px 10px;font-size:9px}.browser-card{width:88%}.process-list article{min-height:175px;grid-template-columns:35px 1fr auto;gap:12px;align-items:start}.process-list article p{grid-column:2/4}.process-list article:hover{padding-left:8px;padding-right:8px}.contact-section{min-height:850px;padding:100px 20px 25px}.contact-inner h2{font-size:clamp(3.5rem,18vw,5rem)}.contact-button{width:135px;height:135px}.contact-footer{gap:18px;flex-wrap:wrap}.contact-footer>span:nth-child(2){display:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Escala tipográfica accesible para textos secundarios y etiquetas. */
+.nav-links a,.button{font-size:14px}
+.nav-status,.hero-kicker,.section-index,.code-top span,.code-status,.project-meta,.contact-kicker{font-size:12px}
+.story-footer p,.bento-skill p,.project-copy p,.process-list p{font-size:15px;line-height:1.65}
+.story-footer p{color:rgba(255,255,255,.74)}
+.bento-skill p{opacity:.78}
+.project-copy p,.process-list p{color:rgba(17,17,15,.72)}
+.story-footer>span,.bento-skill div>span,.process-list article>span,.process-list article>i,.contact-footer{font-size:11px}
+.code-lines{font-size:clamp(12px,1.1vw,14px)}
+.tag-list span{font-size:11px}
+.contact-inner>p{font-size:16px;color:rgba(255,255,255,.7)}
+.contact-footer{color:rgba(255,255,255,.68)}
+.vision-label{font-size:10px}
+
+@media(max-width:680px){
+  .button{font-size:12px}
+  .story-footer p,.bento-skill p,.project-copy p,.process-list p{font-size:14px}
+  .contact-inner>p{font-size:15px}
+}
