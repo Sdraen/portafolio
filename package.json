@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:pages": "shx rm -rf docs && next build && shx mv out docs && shx cp -f CNAME docs/CNAME || true && shx touch docs/.nojekyll"
+    "build:pages": "shx rm -rf docs && next build && shx mv out docs && shx cp -f CNAME docs/CNAME && shx touch docs/.nojekyll"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

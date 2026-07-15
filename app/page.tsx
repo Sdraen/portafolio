@@ -1,414 +1,213 @@
 "use client"
 
-import { Github, Linkedin, Mail, MapPin, ExternalLink, Code2, Palette, Zap } from "lucide-react"
-import { Button } from "../components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
-import { Badge } from "../components/ui/badge"
-import { Separator } from "../components/ui/separator"
 import {
-  LazyMotion,
-  domAnimation,
-  m,
-  MotionConfig,
-  useScroll,
-  useTransform,
-  useReducedMotion,
-  type Variants,
+  ArrowDownRight, ArrowUpRight, Asterisk, Braces, Github, Layers3, Linkedin,
+  Mail, MapPin, Menu, MousePointer2, Sparkles, X, Zap,
+} from "lucide-react"
+import {
+  LazyMotion, domAnimation, m, useMotionValue, useReducedMotion, useScroll,
+  useSpring, useTransform, type MotionValue,
 } from "framer-motion"
-import { useMemo } from "react"
+import { useState, type MouseEvent, type ReactNode } from "react"
 
-// ===== Defaults mínimos =====
-const EASE_OUT = [0.16, 1, 0.3, 1] as const
-const SPRING = { type: "spring", stiffness: 220, damping: 26, mass: 0.9 } as const
+const projects = [
+  {
+    number: "01", title: "Sistema Avícola IECI", label: "Full-stack platform", color: "lime",
+    description: "Plataforma full-stack desarrollada como proyecto de título para digitalizar la gestión de una operación avícola.",
+    tags: ["TypeScript", "React", "Express", "Docker"], href: "https://github.com/Sdraen/avicola-app",
+  },
+  {
+    number: "02", title: "OpenCV App", label: "Computer vision", color: "violet",
+    description: "Aplicación móvil enfocada en procesamiento de imágenes y visión computacional usando OpenCV.",
+    tags: ["OpenCV", "Android", "C++", "Java"], href: "https://github.com/Sdraen/opencv-app-python",
+  },
+  {
+    number: "03", title: "PERRINES UBB", label: "Collaborative web", color: "orange",
+    description: "Proyecto colaborativo universitario para organizar, gestionar y publicar contenido académico de forma simple.",
+    tags: ["JavaScript", "CSS", "HTML"], href: "https://github.com/B4yr0ndg/PERRINES-UBB-",
+  },
+] as const
 
-// ===== Variants muy ligeros =====
-const fadeInUp: Variants = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }
-const fadeIn: Variants = { hidden: { opacity: 0 }, visible: { opacity: 1 } }
+const stack = ["REACT", "NEXT.JS", "TYPESCRIPT", "NODE.JS", "EXPRESS", "POSTGRESQL", "DOCKER", "GIT"]
+const ease = [0.16, 1, 0.3, 1] as const
+const reveal = {
+  initial: { opacity: 0, y: 34 }, whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.2 }, transition: { duration: 0.75, ease },
+}
+
+function MagneticLink({ href, children, className = "", external = false }: {
+  href: string; children: ReactNode; className?: string; external?: boolean
+}) {
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const springX = useSpring(x, { stiffness: 280, damping: 22 })
+  const springY = useSpring(y, { stiffness: 280, damping: 22 })
+  function move(event: MouseEvent<HTMLAnchorElement>) {
+    const rect = event.currentTarget.getBoundingClientRect()
+    x.set((event.clientX - rect.left - rect.width / 2) * 0.14)
+    y.set((event.clientY - rect.top - rect.height / 2) * 0.14)
+  }
+  return (
+    <m.a href={href} className={className} style={{ x: springX, y: springY }} onMouseMove={move}
+      onMouseLeave={() => { x.set(0); y.set(0) }}
+      {...(external ? { target: "_blank", rel: "noreferrer" } : {})}>
+      {children}
+    </m.a>
+  )
+}
+
+function ProjectVisual({ color }: { color: (typeof projects)[number]["color"] }) {
+  if (color === "lime") return (
+    <div className="project-art art-lime" aria-hidden="true">
+      <div className="dashboard-shell">
+        <div className="dashboard-side"><span /><span /><span /></div>
+        <div className="dashboard-main">
+          <div className="dash-head"><i /><i /></div>
+          <div className="dash-metric"><b>98.4%</b><span>operación activa</span></div>
+          <div className="dash-chart">{[35,58,42,78,64,92,72].map((height, i) => <i key={i} style={{ height: `${height}%` }} />)}</div>
+        </div>
+      </div>
+      <div className="float-chip chip-one">LIVE</div><div className="float-chip chip-two">+24%</div>
+    </div>
+  )
+  if (color === "violet") return (
+    <div className="project-art art-violet" aria-hidden="true">
+      <div className="vision-grid" /><div className="scan-box"><span /><span /><span /><span /></div>
+      <div className="scan-line" /><div className="vision-label">OBJECT DETECTED · 99.8%</div><div className="vision-orb" />
+    </div>
+  )
+  return (
+    <div className="project-art art-orange" aria-hidden="true">
+      <div className="browser-card">
+        <div className="browser-top"><i /><i /><i /><span /></div>
+        <div className="browser-content"><div className="browser-copy"><i /><i /><i /></div><div className="browser-photo"><Asterisk /></div></div>
+      </div>
+      <div className="orange-ring ring-a" /><div className="orange-ring ring-b" />
+    </div>
+  )
+}
+
+function ProjectCard({ project, index }: { project: (typeof projects)[number]; index: number }) {
+  const rotateX = useMotionValue(0)
+  const rotateY = useMotionValue(0)
+  const smoothX = useSpring(rotateX, { stiffness: 180, damping: 22 })
+  const smoothY = useSpring(rotateY, { stiffness: 180, damping: 22 })
+  const reduced = useReducedMotion()
+  function tilt(event: MouseEvent<HTMLElement>) {
+    if (reduced) return
+    const rect = event.currentTarget.getBoundingClientRect()
+    rotateY.set(((event.clientX - rect.left) / rect.width - 0.5) * 7)
+    rotateX.set(((event.clientY - rect.top) / rect.height - 0.5) * -7)
+  }
+  return (
+    <m.article className={`project-card project-${project.color}`} style={{ rotateX: smoothX, rotateY: smoothY, transformPerspective: 1200 }}
+      onMouseMove={tilt} onMouseLeave={() => { rotateX.set(0); rotateY.set(0) }}
+      initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.14 }}
+      transition={{ duration: 0.7, delay: index * 0.1, ease }}>
+      <a href={project.href} target="_blank" rel="noreferrer" aria-label={`Ver ${project.title} en GitHub`}>
+        <div className="project-meta"><span>{project.number}</span><span>{project.label}</span><ArrowUpRight /></div>
+        <ProjectVisual color={project.color} />
+        <div className="project-copy"><h3>{project.title}</h3><p>{project.description}</p><div className="tag-list">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div></div>
+      </a>
+    </m.article>
+  )
+}
+
+function CursorGlow({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: MotionValue<number> }) {
+  return <m.div className="cursor-glow" style={{ x: useSpring(mouseX, { stiffness: 55, damping: 18 }), y: useSpring(mouseY, { stiffness: 55, damping: 18 }) }} aria-hidden="true" />
+}
 
 export default function Portfolio() {
-  const prefersReduced = useReducedMotion()
-
-  // Parallax del hero sin setState (se desactiva si el usuario prefiere menos motion)
-  const { scrollY } = useScroll()
-  const yHero = useTransform(scrollY, [0, 400], [0, -36])
-  const yHeroStyle = useMemo(
-    () => (prefersReduced ? {} : ({ y: yHero, willChange: "transform" as const })),
-    [yHero, prefersReduced]
-  )
+  const [menuOpen, setMenuOpen] = useState(false)
+  const mouseX = useMotionValue(-400)
+  const mouseY = useMotionValue(-400)
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 25, restDelta: 0.001 })
+  const heroY = useTransform(scrollYProgress, [0, 0.18], [0, 120])
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.14], [1, 0.15])
 
   return (
-    <MotionConfig reducedMotion="user" transition={SPRING}>
-      <LazyMotion features={domAnimation}>
-        <div className="min-h-screen bg-background overflow-hidden">
-          {/* Background muy liviano */}
-          <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-            {/* Desktop: blobs con scale lento (sin blur) */}
-            <m.div
-              className="hidden md:block absolute -top-1/2 -right-1/2 w-full h-full
-                         bg-gradient-to-br from-primary/8 via-transparent to-transparent
-                         rounded-full transform-gpu paint-safe"
-              animate={prefersReduced ? undefined : { scale: [1, 1.04, 1] }}
-              transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
-              style={{ willChange: prefersReduced ? undefined : "transform" }}
-            />
-            <m.div
-              className="hidden md:block absolute -bottom-1/2 -left-1/2 w-full h-full
-                         bg-gradient-to-tr from-accent/8 via-transparent to-transparent
-                         rounded-full transform-gpu paint-safe"
-              animate={prefersReduced ? undefined : { scale: [1, 1.05, 1] }}
-              transition={{ duration: 34, repeat: Infinity, ease: "linear" }}
-              style={{ willChange: prefersReduced ? undefined : "transform" }}
-            />
-            {/* Mobile: blobs estáticos (sin blur) */}
-            <div
-              className="md:hidden absolute -top-1/2 -right-1/2 w-full h-full
-                         bg-gradient-to-br from-primary/8 via-transparent to-transparent
-                         rounded-full"
-            />
-            <div
-              className="md:hidden absolute -bottom-1/2 -left-1/2 w-full h-full
-                         bg-gradient-to-tr from-accent/8 via-transparent to-transparent
-                         rounded-full"
-            />
-          </div>
+    <LazyMotion features={domAnimation}>
+      <div className="site-shell" onMouseMove={event => { mouseX.set(event.clientX - 250); mouseY.set(event.clientY - 250) }}>
+        <m.div className="scroll-progress" style={{ scaleX }} />
+        <CursorGlow mouseX={mouseX} mouseY={mouseY} /><div className="noise" aria-hidden="true" />
 
-          {/* Nav sin transparencia para evitar blending constante */}
-          <m.nav
-            className="fixed top-0 w-full z-50 border-b border-border bg-background"
-            initial={{ y: -72, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ ...SPRING, bounce: 0 }}
-            style={{ willChange: "transform, opacity" }}
-          >
-            <div className="max-w-6xl mx-auto px-6 py-4">
-              <div className="flex items-center justify-between">
-                <a
-                  href="#"
-                  className="text-xl font-bold text-foreground hover:text-primary transition-colors"
-                >
-                  ATC
-                </a>
-                <div className="flex gap-6">
-                  {["Sobre mí", "Proyectos", "Contacto"].map((item) => (
-                    <a
-                      key={item}
-                      href={`#${item.toLowerCase().replace(" ", "")}`}
-                      className="text-sm text-muted-foreground hover:text-foreground transition-colors relative group
-                                 transition-transform hover:-translate-y-0.5"
-                    >
-                      {item}
-                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
+        <header className="topbar-wrap">
+          <m.nav className="topbar" initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, ease }} aria-label="Navegación principal">
+            <a className="brand" href="#inicio" aria-label="Ir al inicio"><span>AT</span><i /></a>
+            <div className="nav-links"><a href="#sobre-mi">Sobre mí</a><a href="#proyectos">Proyectos</a><a href="#contacto">Contacto</a></div>
+            <a className="nav-status" href="mailto:andrestorresdev@gmail.com"><i /> Disponible</a>
+            <button className="menu-button" onClick={() => setMenuOpen(open => !open)} aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"} aria-expanded={menuOpen}>{menuOpen ? <X /> : <Menu />}</button>
           </m.nav>
+          {menuOpen && <m.div className="mobile-menu" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+            {[["Sobre mí", "#sobre-mi"], ["Proyectos", "#proyectos"], ["Contacto", "#contacto"]].map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}<ArrowDownRight /></a>)}
+          </m.div>}
+        </header>
 
-          {/* Hero */}
-          <section className="pt-32 pb-20 px-6 [content-visibility:auto] [contain-intrinsic-size:1px_700px]">
-            <div className="max-w-6xl mx-auto">
-              <m.div className="space-y-6 transform-gpu" style={yHeroStyle}>
-                <m.div
-                  className="inline-block"
-                  initial="hidden"
-                  animate="visible"
-                  variants={fadeIn}
-                  transition={{ type: "tween", duration: 0.35, ease: EASE_OUT }}
-                >
-                  <Badge variant="secondary" className="mb-4">
-                    Disponible para proyectos
-                  </Badge>
-                </m.div>
-
-                <m.h1
-                  className="text-5xl md:text-7xl font-bold text-balance leading-tight"
-                  initial="hidden"
-                  animate="visible"
-                  variants={fadeInUp}
-                  transition={{ ...SPRING, delay: 0.05 }}
-                  style={{ willChange: "transform, opacity" }}
-                >
-                  {/* Línea 1: Andrés (destacado) + Felipe (secundario) */}
-                  <m.span
-                    className="inline-block text-primary"
-                    initial="hidden"
-                    animate="visible"
-                    variants={fadeInUp}
-                    transition={{ ...SPRING, delay: 0.06 }}
-                  >
-                    Andrés
-                  </m.span>{" "}
-                  <span className="text-muted-foreground">Felipe</span>
-
-                  <br />
-
-                  {/* Línea 2: Torres (destacado) + Castro (secundario) */}
-                  <m.span
-                    className="inline-block text-primary"
-                    initial="hidden"
-                    animate="visible"
-                    variants={fadeInUp}
-                    transition={{ ...SPRING, delay: 0.12 }}
-                  >
-                    Torres
-                  </m.span>{" "}
-                  <span className="text-muted-foreground">Castro</span>
-                </m.h1>
-
-                <m.p
-                  className="text-xl text-muted-foreground max-w-2xl text-pretty leading-relaxed"
-                  initial="hidden"
-                  animate="visible"
-                  variants={fadeInUp}
-                  transition={{ ...SPRING, delay: 0.16 }}
-                  style={{ willChange: "transform, opacity" }}
-                >
-                  Desarrollador web apasionado por crear experiencias digitales excepcionales. Especializado en
-                  desarrollo frontend y backend con tecnologías modernas.
-                </m.p>
-
-                <div className="flex flex-wrap gap-4 pt-4">
-                  <div className="transition-transform hover:scale-[1.03] active:scale-95 transform-gpu">
-                    <Button asChild size="lg">
-                      <a href="#contacto">
-                        <Mail className="mr-2 h-4 w-4" />
-                        Contáctame
-                      </a>
-                    </Button>
-                  </div>
-                  <div className="transition-transform hover:scale-[1.03] active:scale-95 transform-gpu">
-                    <Button asChild variant="outline" size="lg">
-                      <a href="https://github.com/sdraen" target="_blank" rel="noopener noreferrer">
-                        <Github className="mr-2 h-4 w-4" />
-                        GitHub
-                      </a>
-                    </Button>
-                  </div>
+        <main>
+          <section id="inicio" className="hero-section">
+            <div className="hero-orb orb-one" aria-hidden="true" /><div className="hero-orb orb-two" aria-hidden="true" />
+            <m.div className="hero-content" style={{ y: heroY, opacity: heroOpacity }}>
+              <m.div className="hero-kicker" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .15, duration: .6 }}>
+                <Sparkles /> Portfolio / 2026 <span>Concepción, CL</span>
+              </m.div>
+              <h1 className="hero-title" aria-label="Desarrollo ideas que se sienten vivas">
+                <m.span initial={{ y: "110%" }} animate={{ y: 0 }} transition={{ delay: .1, duration: .9, ease }}>Desarrollo ideas</m.span>
+                <m.span className="title-shift" initial={{ y: "110%" }} animate={{ y: 0 }} transition={{ delay: .2, duration: .9, ease }}>que se sienten <i>vivas.</i></m.span>
+              </h1>
+              <m.div className="hero-bottom" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .55, duration: .7 }}>
+                <div className="hero-intro"><span className="intro-line" /><p>Soy <strong>Andrés Torres</strong>, desarrollador full-stack. Creo productos web rápidos, útiles y con una identidad que no pasa desapercibida.</p></div>
+                <div className="hero-actions">
+                  <MagneticLink href="#proyectos" className="button button-primary">Explorar proyectos <ArrowDownRight /></MagneticLink>
+                  <MagneticLink href="mailto:andrestorresdev@gmail.com" className="button button-ghost">Hablemos <span>↗</span></MagneticLink>
                 </div>
               </m.div>
+            </m.div>
+            <m.div className="hero-sticker" initial={{ opacity: 0, scale: .5, rotate: -25 }} animate={{ opacity: 1, scale: 1, rotate: 8 }} transition={{ delay: .65, type: "spring", stiffness: 160, damping: 14 }} aria-hidden="true"><MousePointer2 /><span>BUILT WITH<br />CURIOSITY</span></m.div>
+          </section>
+
+          <div className="ticker" aria-label="Tecnologías principales"><div className="ticker-track">{[...stack, ...stack].map((item, index) => <span key={`${item}-${index}`}>{item}<Asterisk /></span>)}</div></div>
+
+          <section id="sobre-mi" className="section about-section">
+            <m.div className="section-heading" {...reveal}><span className="section-index">01 / SOBRE MÍ</span><h2>Del problema a una experiencia <em>clara.</em></h2></m.div>
+            <div className="about-grid">
+              <m.article className="bento bento-story" {...reveal}>
+                <div className="bento-icon"><Braces /></div>
+                <p className="large-copy">Ingeniería, diseño y atención al detalle para construir software que <span>resuelve de verdad.</span></p>
+                <div className="story-footer"><p>Egresado de Ingeniería de Ejecución en Computación e Informática de la Universidad del Bío-Bío. Me especializo en aplicaciones web end-to-end, desde una interfaz pulida hasta APIs y despliegues confiables.</p><span>ANDRÉS<br />TORRES</span></div>
+              </m.article>
+              <m.article className="bento bento-code" {...reveal} transition={{ ...reveal.transition, delay: .08 }}>
+                <div className="code-top"><span>andres.ts</span><i /><i /><i /></div>
+                <div className="code-lines" aria-hidden="true"><p><b>const</b> developer = &#123;</p><p>&nbsp;&nbsp;mindset: <i>&quot;curious&quot;</i>,</p><p>&nbsp;&nbsp;focus: <i>&quot;useful products&quot;</i>,</p><p>&nbsp;&nbsp;detail: <i>true</i>,</p><p>&nbsp;&nbsp;learning: <i>&quot;always&quot;</i></p><p>&#125;</p></div>
+                <div className="code-status"><i /> ready to build</div>
+              </m.article>
+              <m.article className="bento bento-skill skill-yellow" {...reveal}><Layers3 /><div><span>01</span><h3>Full-stack</h3><p>Interfaces, lógica, datos y despliegue conectados como un solo producto.</p></div></m.article>
+              <m.article className="bento bento-skill skill-pink" {...reveal} transition={{ ...reveal.transition, delay: .08 }}><Sparkles /><div><span>02</span><h3>UI con intención</h3><p>Diseño funcional, accesible y con movimiento que guía en lugar de distraer.</p></div></m.article>
+              <m.article className="bento bento-skill skill-blue" {...reveal} transition={{ ...reveal.transition, delay: .16 }}><Zap /><div><span>03</span><h3>Performance</h3><p>Código mantenible y experiencias rápidas en cualquier dispositivo.</p></div></m.article>
             </div>
           </section>
 
-          <Separator className="max-w-6xl mx-auto" />
-
-          {/* Sobre mí (content-visibility) */}
-          <section
-            id="sobremí"
-            className="py-20 px-6 [content-visibility:auto] [contain-intrinsic-size:1px_900px]"
-          >
-            <div className="max-w-6xl mx-auto">
-              <div className="grid md:grid-cols-2 gap-12 items-start">
-                <m.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.25 }}
-                  variants={fadeInUp}
-                  transition={SPRING}
-                >
-                  <h2 className="text-3xl font-bold mb-6 text-balance">Sobre mí</h2>
-                  <m.div
-                    className="space-y-4 text-muted-foreground leading-relaxed"
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.25 }}
-                    variants={fadeIn}
-                    transition={{ type: "tween", duration: 0.4, ease: EASE_OUT }}
-                  >
-                    <p>
-                      Soy egresado de <strong>Ingeniería de Ejecución en Computación e Informática</strong> de la
-                      Universidad del Bío-Bío (Concepción, Chile). Me apasiona el desarrollo web y la creación de
-                      soluciones digitales que generen valor real.
-                    </p>
-                    <p>
-                      Construyo aplicaciones web end-to-end con foco en rendimiento y experiencia de usuario. Mi stack
-                      principal incluye <strong>React/Next.js</strong>, <strong>TypeScript</strong>,
-                      <strong> Node.js/Express</strong> y bases de datos relacionales/noSQL.
-                    </p>
-                    <p>
-                      Me interesan la arquitectura frontend, la optimización, la accesibilidad y los despliegues con{" "}
-                      <strong>Docker</strong> y CI/CD.
-                    </p>
-                  </m.div>
-                </m.div>
-
-                <div className="space-y-6">
-                  {[
-                    { icon: Code2, title: "Desarrollo", color: "text-primary", desc: "Experiencia en desarrollo full-stack con enfoque en aplicaciones escalables y mantenibles." },
-                    { icon: Palette, title: "Diseño UI/UX", color: "text-accent", desc: "Interfaces intuitivas y atractivas orientadas a mejorar la experiencia de usuario." },
-                    { icon: Zap, title: "Optimización", color: "text-yellow-500", desc: "Rendimiento y mejores prácticas para entregar apps rápidas y eficientes." },
-                  ].map((item) => (
-                    <div
-                      key={item.title}
-                      className="transition-transform hover:-translate-y-1 transform-gpu"
-                    >
-                      <Card className="hover:shadow-lg transition-shadow duration-300 border-border/50 hover:border-primary/30">
-                        <CardHeader>
-                          <CardTitle className="flex items-center gap-2">
-                            <span className="transition-transform -translate-y-0.5 group-hover:-translate-y-1">
-                              <item.icon className={`h-5 w-5 ${item.color}`} />
-                            </span>
-                            {item.title}
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+          <section id="proyectos" className="section projects-section">
+            <m.div className="section-heading projects-heading" {...reveal}><span className="section-index">02 / TRABAJO SELECCIONADO</span><h2>Proyectos con código,<br /><em>contexto y propósito.</em></h2><a href="https://github.com/sdraen" target="_blank" rel="noreferrer">Ver GitHub <ArrowUpRight /></a></m.div>
+            <div className="projects-grid">{projects.map((project, index) => <ProjectCard key={project.title} project={project} index={index} />)}</div>
           </section>
 
-          <Separator className="max-w-6xl mx-auto" />
-
-          {/* Proyectos */}
-          <section
-            id="proyectos"
-            className="py-20 px-6 [content-visibility:auto] [contain-intrinsic-size:1px_900px]"
-          >
-            <div className="max-w-6xl mx-auto">
-              <m.h2
-                className="text-3xl font-bold mb-12 text-balance"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.25 }}
-                variants={fadeInUp}
-                transition={SPRING}
-              >
-                Proyectos destacados
-              </m.h2>
-
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[
-                  { title: "PERRINES UBB", desc: "Proyecto colaborativo UBB para gestión y publicación de contenidos académicos.", url: "https://github.com/B4yr0ndg/PERRINES-UBB-", tags: ["JavaScript", "CSS", "HTML"] },
-                  { title: "OpenCV App", desc: "Aplicación móvil con procesamiento de imágenes usando OpenCV.", url: "https://github.com/Sdraen/opencv-app-python", tags: ["OpenCV", "Android", "C++/Java"] },
-                  { title: "Sistema Avícola IECI", desc: "Proyecto Tesis de Ingeniería en Ejecución Informática.", url: "https://github.com/Sdraen/avicola-app", tags: ["TypeScript", "React", "Express", "Docker"] },
-                ].map((project) => (
-                  <a
-                    key={project.title}
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group block transform-gpu transition-transform hover:-translate-y-1"
-                  >
-                    <Card className="h-full hover:border-primary transition-all duration-300 hover:shadow-xl border-border/50">
-                      <CardHeader>
-                        <div className="flex items-start justify-between">
-                          <CardTitle className="text-xl transition-colors group-hover:text-primary">
-                            {project.title}
-                          </CardTitle>
-                          <span className="transition-transform group-hover:-translate-y-1">
-                            <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                          </span>
-                        </div>
-                        <CardDescription className="leading-relaxed">{project.desc}</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="flex flex-wrap gap-2">
-                          {project.tags.map((tag) => (
-                            <Badge key={tag} variant="secondary" className="group-hover:bg-primary/10 transition-colors">
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </a>
-                ))}
-              </div>
-            </div>
+          <section className="section process-section">
+            <m.div className="section-heading" {...reveal}><span className="section-index">03 / CÓMO TRABAJO</span><h2>Simple, colaborativo<br />y <em>sin humo.</em></h2></m.div>
+            <div className="process-list">{[
+              ["01", "Entender", "Primero aclaro el problema, el usuario y la señal concreta de éxito.", "DISCOVER"],
+              ["02", "Diseñar", "Convierto requisitos en flujos, jerarquía visual y una dirección clara.", "DEFINE"],
+              ["03", "Construir", "Desarrollo, pruebo, optimizo y preparo una entrega que pueda evolucionar.", "DELIVER"],
+            ].map(([number, title, description, label], index) => <m.article key={title} initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: .5 }} transition={{ duration: .65, delay: index * .08, ease }}><span>{number}</span><h3>{title}</h3><p>{description}</p><i>{label}</i><ArrowUpRight /></m.article>)}</div>
           </section>
 
-          <Separator className="max-w-6xl mx-auto" />
-
-          {/* Contacto */}
-          <section
-            id="contacto"
-            className="py-20 px-6 [content-visibility:auto] [contain-intrinsic-size:1px_700px]"
-          >
-            <div className="max-w-6xl mx-auto">
-              <div className="max-w-2xl mx-auto text-center space-y-8">
-                <m.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.25 }}
-                  variants={fadeInUp}
-                  transition={SPRING}
-                >
-                  <h2 className="text-3xl font-bold mb-4 text-balance">Trabajemos juntos</h2>
-                  <p className="text-muted-foreground text-lg leading-relaxed">
-                    Estoy disponible para proyectos freelance, colaboraciones o posiciones full-time. ¡No dudes en contactarme!
-                  </p>
-                </m.div>
-
-                <div className="transition-transform hover:scale-[1.01] transform-gpu">
-                  <Card className="hover:shadow-xl transition-shadow duration-300">
-                    <CardContent className="pt-6">
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-3 text-left transition-transform hover:translate-x-1">
-                          <Mail className="h-5 w-5 text-primary shrink-0" />
-                          <div>
-                            <p className="text-sm text-muted-foreground">Email</p>
-                            <a href="mailto:andrestorresdev@gmail.com" className="text-foreground hover:text-primary transition-colors">
-                              andrestorresdev@gmail.com
-                            </a>
-                          </div>
-                        </div>
-
-                        <Separator />
-
-                        <div className="flex items-center gap-3 text-left transition-transform hover:translate-x-1">
-                          <MapPin className="h-5 w-5 text-accent shrink-0" />
-                          <div>
-                            <p className="text-sm text-muted-foreground">Ubicación</p>
-                            <p className="text-foreground">Concepción, Chile</p>
-                          </div>
-                        </div>
-
-                        <Separator />
-
-                        <div className="flex justify-center gap-4 pt-4">
-                          {[
-                            { icon: Github, href: "https://github.com/sdraen", label: "GitHub" },
-                            { icon: Linkedin, href: "https://www.linkedin.com/in/andrés-felipe-torres-castro-016587327/", label: "LinkedIn" },
-                            { icon: Mail, href: "mailto:andres.torres1901@alumnos.ubiobio.cl", label: "Email" },
-                          ].map((social) => (
-                            <div key={social.label} className="transition-transform hover:-translate-y-0.5">
-                              <Button asChild variant="outline" size="icon">
-                                <a href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.label}>
-                                  <social.icon className="h-5 w-5" />
-                                </a>
-                              </Button>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
-            </div>
+          <section id="contacto" className="contact-section">
+            <div className="contact-orbit orbit-a" aria-hidden="true" /><div className="contact-orbit orbit-b" aria-hidden="true" />
+            <m.div {...reveal} className="contact-inner"><span className="contact-kicker"><i /> DISPONIBLE PARA NUEVOS DESAFÍOS</span><h2>¿Creamos algo<br /><em>extraordinario?</em></h2><p>Cuéntame tu idea, desafío o proyecto. Estoy a un mensaje de distancia.</p><MagneticLink href="mailto:andrestorresdev@gmail.com" className="contact-button"><span>Escríbeme</span><Mail /></MagneticLink></m.div>
+            <div className="contact-footer"><span><MapPin /> Concepción, Chile</span><span>© {new Date().getFullYear()} Andrés Torres</span><div><a href="https://github.com/sdraen" target="_blank" rel="noreferrer" aria-label="GitHub"><Github /></a><a href="https://www.linkedin.com/in/andr%C3%A9s-felipe-torres-castro-016587327/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin /></a><a href="mailto:andrestorresdev@gmail.com" aria-label="Email"><Mail /></a></div></div>
           </section>
-
-          {/* Footer */}
-          <m.footer
-            className="border-t border-border py-8 px-6 mt-20"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={fadeIn}
-            transition={{ type: "tween", duration: 0.6, ease: EASE_OUT }}
-          >
-            <div className="max-w-6xl mx-auto text-center text-sm text-muted-foreground">
-              <p>© 2025 Andrés Felipe Torres Castro. Todos los derechos reservados.</p>
-              <p className="mt-2">Desarrollado con Next.js y Tailwind CSS</p>
-            </div>
-          </m.footer>
-        </div>
-      </LazyMotion>
-    </MotionConfig>
+        </main>
+      </div>
+    </LazyMotion>
   )
 }
