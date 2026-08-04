@@ -47,3 +47,31 @@
   .contact-inner h2{font-size:clamp(3rem,13.2vw,3.55rem);line-height:.92;letter-spacing:-.055em}
   .contact-inner h2 em{display:block;font-size:.88em;line-height:1;letter-spacing:-.045em;white-space:nowrap}
 }
+
+/* Proyecto destacado: Industrial Commerce. */
+.art-cyan{padding:38px;background:linear-gradient(135deg,#c9f5ff 0%,var(--cyan) 46%,#69a7ff 100%);display:grid;place-items:center}
+.commerce-browser{position:relative;width:86%;height:84%;border:2px solid var(--ink);border-radius:16px;overflow:hidden;background:white;box-shadow:16px 18px 0 rgba(17,17,15,.22);transform:rotate(-1.2deg)}
+.commerce-browser-top{height:34px;padding:0 12px;border-bottom:1px solid var(--ink);display:flex;align-items:center;gap:7px;background:var(--paper)}
+.commerce-browser-top i{width:8px;height:8px;border:1px solid var(--ink);border-radius:50%}
+.commerce-browser-top i:first-child{background:var(--orange)}
+.commerce-browser-top span{max-width:58%;margin-left:9px;padding:4px 10px;border-radius:20px;background:rgba(17,17,15,.08);overflow:hidden;color:rgba(17,17,15,.6);font-family:var(--font-mono),monospace;font-size:9px;text-overflow:ellipsis;white-space:nowrap}
+.commerce-screenshot{position:relative;height:calc(100% - 34px)}
+.commerce-screenshot img{object-fit:cover;object-position:top}
+.commerce-live{position:absolute;right:6%;bottom:9%;padding:10px 14px;border:2px solid var(--ink);border-radius:50px;background:var(--lime);box-shadow:4px 4px 0 var(--ink);display:flex;align-items:center;gap:8px;font-family:var(--font-mono),monospace;font-size:10px;font-weight:800;text-transform:uppercase;transform:rotate(4deg)}
+.commerce-live i{width:7px;height:7px;border-radius:50%;background:#178c50;box-shadow:0 0 0 4px rgba(23,140,80,.16)}
+.project-copy-footer{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
+.project-action{flex:none;display:flex;align-items:center;gap:6px;padding-bottom:6px;border-bottom:1px solid var(--ink);font-size:12px;font-weight:750}
+.project-action svg{width:15px}
+.project-admin-link{padding:15px 22px;color:white;background:var(--ink);border-top:1px solid var(--ink);align-items:center;justify-content:space-between;font-family:var(--font-mono),monospace;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;transition:background .25s,color .25s}
+.project-card>a.project-admin-link,.project-admin-link span{display:flex;gap:10px;align-items:center}
+.project-admin-link svg{width:17px}
+.project-admin-link:hover{color:var(--ink);background:var(--lime)}
+
+@media(max-width:680px){
+  .art-cyan{padding:22px}
+  .commerce-browser{width:92%;height:80%;box-shadow:9px 10px 0 rgba(17,17,15,.22)}
+  .commerce-browser-top span{max-width:72%}
+  .commerce-live{right:3%;bottom:8%;padding:8px 10px;font-size:9px}
+  .project-copy-footer{align-items:flex-start;flex-direction:column}
+  .project-admin-link{font-size:10px}
+}
