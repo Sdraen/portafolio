@@ -8,27 +8,34 @@ import {
   LazyMotion, domAnimation, m, useMotionValue, useReducedMotion, useScroll,
   useSpring, useTransform, type MotionValue,
 } from "framer-motion"
+import Image from "next/image"
 import { useState, type MouseEvent, type ReactNode } from "react"
 
 const projects = [
   {
-    number: "01", title: "Sistema Avícola IECI", label: "Full-stack platform", color: "lime",
+    number: "01", title: "Industrial Commerce", label: "E-commerce full stack", color: "cyan",
+    description: "Plataforma demostrativa de comercio industrial con catálogo, cotizaciones, checkout y un panel administrativo explorable en modo de solo lectura.",
+    tags: ["Next.js", "TypeScript", "Express", "Supabase"], href: "https://industrial-commerce-web.vercel.app",
+    action: "Visitar tienda", adminHref: "https://industrial-commerce-web.vercel.app/admin",
+  },
+  {
+    number: "02", title: "Sistema Avícola IECI", label: "Full-stack platform", color: "lime",
     description: "Plataforma full-stack desarrollada como proyecto de título para digitalizar la gestión de una operación avícola.",
-    tags: ["TypeScript", "React", "Express", "Docker"], href: "https://github.com/Sdraen/avicola-app",
+    tags: ["TypeScript", "React", "Express", "Docker"], href: "https://github.com/Sdraen/avicola-app", action: "Ver código", adminHref: null,
   },
   {
-    number: "02", title: "OpenCV App", label: "Computer vision", color: "violet",
+    number: "03", title: "OpenCV App", label: "Computer vision", color: "violet",
     description: "Aplicación móvil enfocada en procesamiento de imágenes y visión computacional usando OpenCV.",
-    tags: ["OpenCV", "Android", "C++", "Java"], href: "https://github.com/Sdraen/opencv-app-python",
+    tags: ["OpenCV", "Android", "C++", "Java"], href: "https://github.com/Sdraen/opencv-app-python", action: "Ver código", adminHref: null,
   },
   {
-    number: "03", title: "PERRINES UBB", label: "Collaborative web", color: "orange",
+    number: "04", title: "PERRINES UBB", label: "Collaborative web", color: "orange",
     description: "Proyecto colaborativo universitario para organizar, gestionar y publicar contenido académico de forma simple.",
-    tags: ["JavaScript", "CSS", "HTML"], href: "https://github.com/B4yr0ndg/PERRINES-UBB-",
+    tags: ["JavaScript", "CSS", "HTML"], href: "https://github.com/B4yr0ndg/PERRINES-UBB-", action: "Ver código", adminHref: null,
   },
 ] as const
 
-const stack = ["REACT", "NEXT.JS", "TYPESCRIPT", "NODE.JS", "EXPRESS", "POSTGRESQL", "DOCKER", "GIT"]
+const stack = ["REACT", "NEXT.JS", "TYPESCRIPT", "NODE.JS", "EXPRESS", "POSTGRESQL", "SUPABASE", "DOCKER", "GIT"]
 const ease = [0.16, 1, 0.3, 1] as const
 const reveal = {
   initial: { opacity: 0, y: 34 }, whileInView: { opacity: 1, y: 0 },
@@ -57,6 +64,15 @@ function MagneticLink({ href, children, className = "", external = false }: {
 }
 
 function ProjectVisual({ color }: { color: (typeof projects)[number]["color"] }) {
+  if (color === "cyan") return (
+    <div className="project-art art-cyan" aria-hidden="true">
+      <div className="commerce-browser">
+        <div className="commerce-browser-top"><i /><i /><i /><span>industrial-commerce-web.vercel.app</span></div>
+        <div className="commerce-screenshot"><Image src="/projects/industrial-commerce.png" alt="" fill sizes="(max-width: 680px) 88vw, 1040px" priority /></div>
+      </div>
+      <div className="commerce-live"><i /> Demo pública</div>
+    </div>
+  )
   if (color === "lime") return (
     <div className="project-art art-lime" aria-hidden="true">
       <div className="dashboard-shell">
@@ -104,11 +120,12 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
       onMouseMove={tilt} onMouseLeave={() => { rotateX.set(0); rotateY.set(0) }}
       initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.14 }}
       transition={{ duration: 0.7, delay: index * 0.1, ease }}>
-      <a href={project.href} target="_blank" rel="noreferrer" aria-label={`Ver ${project.title} en GitHub`}>
+      <a className="project-primary-link" href={project.href} target="_blank" rel="noreferrer" aria-label={`${project.action}: ${project.title}`}>
         <div className="project-meta"><span>{project.number}</span><span>{project.label}</span><ArrowUpRight /></div>
         <ProjectVisual color={project.color} />
-        <div className="project-copy"><h3>{project.title}</h3><p>{project.description}</p><div className="tag-list">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div></div>
+        <div className="project-copy"><h3>{project.title}</h3><p>{project.description}</p><div className="project-copy-footer"><div className="tag-list">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div><span className="project-action">{project.action} <ArrowUpRight /></span></div></div>
       </a>
+      {project.adminHref && <a className="project-admin-link" href={project.adminHref} target="_blank" rel="noreferrer"><span><Layers3 /> Explorar panel administrador</span><ArrowUpRight /></a>}
     </m.article>
   )
 }
