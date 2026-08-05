@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://www.andrestorres.cl
+Sitemap: https://www.andrestorres.cl/sitemap.xml
