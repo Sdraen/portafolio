@@ -16,22 +16,22 @@ const projects = [
     number: "01", title: "Industrial Commerce", label: "E-commerce full stack", color: "cyan",
     description: "Plataforma demostrativa de comercio industrial con catálogo, cotizaciones, checkout y un panel administrativo explorable en modo de solo lectura.",
     tags: ["Next.js", "TypeScript", "Express", "Supabase"], href: "https://industrial-commerce-web.vercel.app",
-    action: "Visitar tienda", adminHref: "https://industrial-commerce-web.vercel.app/admin",
+    action: "Visitar tienda", adminHref: "https://industrial-commerce-web.vercel.app/admin", caseHref: "/proyectos/industrial-commerce/",
   },
   {
     number: "02", title: "Sistema Avícola IECI", label: "Full-stack platform", color: "lime",
     description: "Plataforma full-stack desarrollada como proyecto de título para digitalizar la gestión de una operación avícola.",
-    tags: ["TypeScript", "React", "Express", "Docker"], href: "https://github.com/Sdraen/avicola-app", action: "Ver código", adminHref: null,
+    tags: ["TypeScript", "React", "Express", "Docker"], href: "https://github.com/Sdraen/avicola-app", action: "Ver código", adminHref: null, caseHref: "/proyectos/sistema-avicola-ieci/",
   },
   {
     number: "03", title: "OpenCV App", label: "Computer vision", color: "violet",
     description: "Aplicación móvil enfocada en procesamiento de imágenes y visión computacional usando OpenCV.",
-    tags: ["OpenCV", "Android", "C++", "Java"], href: "https://github.com/Sdraen/opencv-app-python", action: "Ver código", adminHref: null,
+    tags: ["OpenCV", "Android", "C++", "Java"], href: "https://github.com/Sdraen/opencv-app-python", action: "Ver código", adminHref: null, caseHref: null,
   },
   {
     number: "04", title: "PERRINES UBB", label: "Collaborative web", color: "orange",
     description: "Proyecto colaborativo universitario para organizar, gestionar y publicar contenido académico de forma simple.",
-    tags: ["JavaScript", "CSS", "HTML"], href: "https://github.com/B4yr0ndg/PERRINES-UBB-", action: "Ver código", adminHref: null,
+    tags: ["JavaScript", "CSS", "HTML"], href: "https://github.com/B4yr0ndg/PERRINES-UBB-", action: "Ver código", adminHref: null, caseHref: null,
   },
 ] as const
 
@@ -115,15 +115,19 @@ function ProjectCard({ project, index }: { project: (typeof projects)[number]; i
     rotateY.set(((event.clientX - rect.left) / rect.width - 0.5) * 7)
     rotateX.set(((event.clientY - rect.top) / rect.height - 0.5) * -7)
   }
+  const primaryHref = project.caseHref ?? project.href
+  const primaryAction = project.caseHref ? "Ver caso" : project.action
   return (
     <m.article className={`project-card project-${project.color}`} style={{ rotateX: smoothX, rotateY: smoothY, transformPerspective: 1200 }}
       onMouseMove={tilt} onMouseLeave={() => { rotateX.set(0); rotateY.set(0) }}
       initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.14 }}
       transition={{ duration: 0.7, delay: index * 0.1, ease }}>
-      <a className="project-primary-link" href={project.href} target="_blank" rel="noreferrer" aria-label={`${project.action}: ${project.title}`}>
+      <a className="project-primary-link" href={primaryHref}
+        {...(!project.caseHref ? { target: "_blank", rel: "noreferrer" } : {})}
+        aria-label={`${primaryAction}: ${project.title}`}>
         <div className="project-meta"><span>{project.number}</span><span>{project.label}</span><ArrowUpRight /></div>
         <ProjectVisual color={project.color} />
-        <div className="project-copy"><h3>{project.title}</h3><p>{project.description}</p><div className="project-copy-footer"><div className="tag-list">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div><span className="project-action">{project.action} <ArrowUpRight /></span></div></div>
+        <div className="project-copy"><h3>{project.title}</h3><p>{project.description}</p><div className="project-copy-footer"><div className="tag-list">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div><span className="project-action">{primaryAction} <ArrowUpRight /></span></div></div>
       </a>
       {project.adminHref && <a className="project-admin-link" href={project.adminHref} target="_blank" rel="noreferrer"><span><Layers3 /> Explorar panel administrador</span><ArrowUpRight /></a>}
     </m.article>
@@ -153,7 +157,7 @@ export default function Portfolio() {
           <m.nav className="topbar" initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, ease }} aria-label="Navegación principal">
             <a className="brand" href="#inicio" aria-label="Ir al inicio"><span>AT</span><i /></a>
             <div className="nav-links"><a href="#sobre-mi">Sobre mí</a><a href="#proyectos">Proyectos</a><a href="#contacto">Contacto</a></div>
-            <a className="nav-status" href="mailto:andrestorresdev@gmail.com"><i /> Disponible</a>
+            <a className="nav-status" href="mailto:andrestorresdev@gmail.com"><i /> Disponible para oportunidades</a>
             <button className="menu-button" onClick={() => setMenuOpen(open => !open)} aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"} aria-expanded={menuOpen}>{menuOpen ? <X /> : <Menu />}</button>
           </m.nav>
           {menuOpen && <m.div className="mobile-menu" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
@@ -220,7 +224,7 @@ export default function Portfolio() {
 
           <section id="contacto" className="contact-section">
             <div className="contact-orbit orbit-a" aria-hidden="true" /><div className="contact-orbit orbit-b" aria-hidden="true" />
-            <m.div {...reveal} className="contact-inner"><span className="contact-kicker"><i /> DISPONIBLE PARA NUEVOS DESAFÍOS</span><h2>¿Creamos algo<br /><em>extraordinario?</em></h2><p>Cuéntame tu idea, desafío o proyecto. Estoy a un mensaje de distancia.</p><MagneticLink href="mailto:andrestorresdev@gmail.com" className="contact-button"><span>Escríbeme</span><Mail /></MagneticLink></m.div>
+            <m.div {...reveal} className="contact-inner"><span className="contact-kicker"><i /> DISPONIBLE PARA OPORTUNIDADES FULL-STACK</span><h2>¿Creamos algo<br /><em>extraordinario?</em></h2><p>Busco aportar en productos web donde pueda conectar interfaz, lógica, datos y despliegue. Si tienes una oportunidad o un proyecto, conversemos.</p><MagneticLink href="mailto:andrestorresdev@gmail.com" className="contact-button"><span>Escríbeme</span><Mail /></MagneticLink></m.div>
             <div className="contact-footer"><span><MapPin /> Concepción, Chile</span><span>© {new Date().getFullYear()} Andrés Torres</span><div><a href="https://github.com/sdraen" target="_blank" rel="noreferrer" aria-label="GitHub"><Github /></a><a href="https://www.linkedin.com/in/andr%C3%A9s-felipe-torres-castro-016587327/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin /></a><a href="mailto:andrestorresdev@gmail.com" aria-label="Email"><Mail /></a></div></div>
           </section>
         </main>
