@@ -47,7 +47,7 @@ export function ProjectCaseStudy({
     <main className={`case-page case-${accent}`}>
       <nav className="case-nav" aria-label="Navegación del proyecto">
         <Link href="/#proyectos"><ArrowLeft /> Volver al portafolio</Link>
-        <a href="mailto:andrestorresdev@gmail.com">Disponible para oportunidades <i /></a>
+        <Link href="/#contacto">Disponible para oportunidades <i /></Link>
       </nav>
 
       <header className="case-hero">
@@ -117,7 +117,7 @@ export function ProjectCaseStudy({
         <Layers3 />
         <span>¿TIENES UN DESAFÍO SIMILAR?</span>
         <h2>Conversemos sobre<br />tu próximo producto.</h2>
-        <a href="mailto:andrestorresdev@gmail.com">Escríbeme <ArrowUpRight /></a>
+        <Link href="/#contacto">Escríbeme <ArrowUpRight /></Link>
       </section>
     </main>
   )

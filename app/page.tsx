@@ -10,6 +10,7 @@ import {
 } from "framer-motion"
 import Image from "next/image"
 import { useState, type MouseEvent, type ReactNode } from "react"
+import { ContactForm } from "@/components/contact-form"
 
 const projects = [
   {
@@ -157,7 +158,7 @@ export default function Portfolio() {
           <m.nav className="topbar" initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, ease }} aria-label="Navegación principal">
             <a className="brand" href="#inicio" aria-label="Ir al inicio"><span>AT</span><i /></a>
             <div className="nav-links"><a href="#sobre-mi">Sobre mí</a><a href="#proyectos">Proyectos</a><a href="#contacto">Contacto</a></div>
-            <a className="nav-status" href="mailto:andrestorresdev@gmail.com"><i /> Disponible para oportunidades</a>
+            <a className="nav-status" href="#contacto"><i /> Disponible para oportunidades</a>
             <button className="menu-button" onClick={() => setMenuOpen(open => !open)} aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"} aria-expanded={menuOpen}>{menuOpen ? <X /> : <Menu />}</button>
           </m.nav>
           {menuOpen && <m.div className="mobile-menu" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
@@ -180,7 +181,7 @@ export default function Portfolio() {
                 <div className="hero-intro"><span className="intro-line" /><p>Soy <strong>Andrés Torres</strong>, desarrollador full-stack. Creo productos web rápidos, útiles y con una identidad que no pasa desapercibida.</p></div>
                 <div className="hero-actions">
                   <MagneticLink href="#proyectos" className="button button-primary">Explorar proyectos <ArrowDownRight /></MagneticLink>
-                  <MagneticLink href="mailto:andrestorresdev@gmail.com" className="button button-ghost">Hablemos <span>↗</span></MagneticLink>
+                  <MagneticLink href="#contacto" className="button button-ghost">Hablemos <span>↓</span></MagneticLink>
                 </div>
               </m.div>
             </m.div>
@@ -224,7 +225,15 @@ export default function Portfolio() {
 
           <section id="contacto" className="contact-section">
             <div className="contact-orbit orbit-a" aria-hidden="true" /><div className="contact-orbit orbit-b" aria-hidden="true" />
-            <m.div {...reveal} className="contact-inner"><span className="contact-kicker"><i /> DISPONIBLE PARA OPORTUNIDADES FULL-STACK</span><h2>¿Creamos algo<br /><em>extraordinario?</em></h2><p>Busco aportar en productos web donde pueda conectar interfaz, lógica, datos y despliegue. Si tienes una oportunidad o un proyecto, conversemos.</p><MagneticLink href="mailto:andrestorresdev@gmail.com" className="contact-button"><span>Escríbeme</span><Mail /></MagneticLink></m.div>
+            <m.div {...reveal} className="contact-inner contact-layout">
+              <div className="contact-copy">
+                <span className="contact-kicker"><i /> DISPONIBLE PARA OPORTUNIDADES FULL-STACK</span>
+                <h2>Hagamos algo<br /><em>extraordinario.</em></h2>
+                <p>¿Tienes una oportunidad laboral, un proyecto de software o una idea que necesita tomar forma? Cuéntame el contexto y conversemos.</p>
+                <a className="contact-email" href="mailto:andrestorresdev@gmail.com"><Mail /> Prefiero escribir por correo</a>
+              </div>
+              <ContactForm />
+            </m.div>
             <div className="contact-footer"><span><MapPin /> Concepción, Chile</span><span>© {new Date().getFullYear()} Andrés Torres</span><div><a href="https://github.com/sdraen" target="_blank" rel="noreferrer" aria-label="GitHub"><Github /></a><a href="https://www.linkedin.com/in/andr%C3%A9s-felipe-torres-castro-016587327/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin /></a><a href="mailto:andrestorresdev@gmail.com" aria-label="Email"><Mail /></a></div></div>
           </section>
         </main>
