@@ -43,8 +43,8 @@ const reveal = {
   viewport: { once: true, amount: 0.2 }, transition: { duration: 0.75, ease },
 }
 
-function MagneticLink({ href, children, className = "", external = false }: {
-  href: string; children: ReactNode; className?: string; external?: boolean
+function MagneticLink({ href, children, className = "", external = false, download }: {
+  href: string; children: ReactNode; className?: string; external?: boolean; download?: string
 }) {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
@@ -58,7 +58,8 @@ function MagneticLink({ href, children, className = "", external = false }: {
   return (
     <m.a href={href} className={className} style={{ x: springX, y: springY }} onMouseMove={move}
       onMouseLeave={() => { x.set(0); y.set(0) }}
-      {...(external ? { target: "_blank", rel: "noreferrer" } : {})}>
+      {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+      {...(download ? { download } : {})}>
       {children}
     </m.a>
   )
@@ -157,12 +158,12 @@ export default function Portfolio() {
         <header className="topbar-wrap">
           <m.nav className="topbar" initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, ease }} aria-label="Navegación principal">
             <a className="brand" href="#inicio" aria-label="Ir al inicio"><span>AT</span><i /></a>
-            <div className="nav-links"><a href="#sobre-mi">Sobre mí</a><a href="#proyectos">Proyectos</a><a href="#contacto">Contacto</a></div>
+            <div className="nav-links"><a href="#sobre-mi">Sobre mí</a><a href="#proyectos">Proyectos</a><a href="/cv-andres-torres.pdf" download>CV</a><a href="#contacto">Contacto</a></div>
             <a className="nav-status" href="#contacto"><i /> Disponible para oportunidades</a>
             <button className="menu-button" onClick={() => setMenuOpen(open => !open)} aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"} aria-expanded={menuOpen}>{menuOpen ? <X /> : <Menu />}</button>
           </m.nav>
           {menuOpen && <m.div className="mobile-menu" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            {[["Sobre mí", "#sobre-mi"], ["Proyectos", "#proyectos"], ["Contacto", "#contacto"]].map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}<ArrowDownRight /></a>)}
+            {[["Sobre mí", "#sobre-mi"], ["Proyectos", "#proyectos"], ["Descargar CV", "/cv-andres-torres.pdf"], ["Contacto", "#contacto"]].map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}<ArrowDownRight /></a>)}
           </m.div>}
         </header>
 
@@ -181,7 +182,7 @@ export default function Portfolio() {
                 <div className="hero-intro"><span className="intro-line" /><p>Soy <strong>Andrés Torres</strong>, desarrollador full-stack. Creo productos web rápidos, útiles y con una identidad que no pasa desapercibida.</p></div>
                 <div className="hero-actions">
                   <MagneticLink href="#proyectos" className="button button-primary">Explorar proyectos <ArrowDownRight /></MagneticLink>
-                  <MagneticLink href="#contacto" className="button button-ghost">Hablemos <span>↓</span></MagneticLink>
+                  <MagneticLink href="/cv-andres-torres.pdf" download="Andres-Torres-CV.pdf" className="button button-ghost">Descargar CV <span>↓</span></MagneticLink>
                 </div>
               </m.div>
             </m.div>
