@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>CV Andrés Felipe Torres Castro</title>
+  <style>
+    @page { size: A4; margin: 12mm 14mm; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      color: #172033;
+      background: #fff;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 9.4pt;
+      line-height: 1.3;
+    }
+    a { color: #174ea6; text-decoration: none; }
+    header { border-bottom: 2px solid #172033; padding-bottom: 7px; }
+    h1 { margin: 0; font-size: 22pt; line-height: 1.05; letter-spacing: -.3px; }
+    .role { margin: 4px 0 5px; color: #174ea6; font-size: 11pt; font-weight: 700; }
+    .contact { display: flex; flex-wrap: wrap; gap: 3px 8px; font-size: 8.6pt; }
+    .contact span:not(:last-child)::after { content: " ·"; margin-left: 6px; color: #737b8c; }
+    section { margin-top: 8px; }
+    h2 {
+      margin: 0 0 4px;
+      border-bottom: 1px solid #aeb5c2;
+      padding-bottom: 2px;
+      color: #172033;
+      font-size: 10pt;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+    }
+    p { margin: 0; }
+    .entry { margin-top: 5px; }
+    .entry:first-of-type { margin-top: 0; }
+    .entry-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+    .entry-title { font-size: 9.8pt; font-weight: 700; }
+    .entry-date { flex: none; color: #444d60; font-size: 8.7pt; font-weight: 700; }
+    .entry-sub { display: flex; justify-content: space-between; gap: 12px; margin-top: 1px; color: #444d60; font-size: 8.7pt; }
+    .stack { color: #174ea6; font-weight: 700; }
+    ul { margin: 2px 0 0 15px; padding: 0; }
+    li { margin: 1px 0; padding-left: 1px; }
+    .project-links { margin-top: 2px; font-size: 8.4pt; }
+    .skills { display: grid; grid-template-columns: 1fr; gap: 2px; }
+    .skills strong { color: #172033; }
+    .education { display: flex; justify-content: space-between; gap: 12px; }
+    .education p:last-child { flex: none; color: #444d60; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Andrés Felipe Torres Castro</h1>
+    <p class="role">Desarrollador Full-Stack Junior</p>
+    <div class="contact">
+      <span>Concepción, Chile</span>
+      <span>Disponibilidad inmediata</span>
+      <span>+56 9 7104 9293</span>
+      <span><a href="mailto:andrestorresdev@gmail.com">andrestorresdev@gmail.com</a></span>
+      <span><a href="https://www.andrestorres.cl">andrestorres.cl</a></span>
+      <span><a href="https://www.linkedin.com/in/andrestorresdev/">linkedin.com/in/andrestorresdev</a></span>
+      <span><a href="https://github.com/Sdraen">github.com/Sdraen</a></span>
+    </div>
+  </header>
+
+  <section>
+    <h2>Perfil</h2>
+    <p>Egresado de Ingeniería de Ejecución en Computación e Informática de la Universidad del Bío-Bío. Desarrollo aplicaciones web end-to-end con React, Next.js, TypeScript, Node.js y PostgreSQL. Tengo experiencia levantando requisitos con usuarios, modelando datos, construyendo API REST, implementando autenticación por roles y desplegando en Docker y Linux. Busco incorporarme como desarrollador full-stack o frontend junior.</p>
+  </section>
+
+  <section>
+    <h2>Experiencia</h2>
+    <article class="entry">
+      <div class="entry-head">
+        <p class="entry-title">Programador Informático — Práctica Profesional II</p>
+        <p class="entry-date">nov. 2024 – mar. 2025</p>
+      </div>
+      <div class="entry-sub"><p>CIMUBB, Universidad del Bío-Bío</p><p>Concepción · Híbrido</p></div>
+      <ul>
+        <li>Modernicé experimentos de visión por computador con Python y OpenCV, mejorando su estabilidad y reduciendo fallos detectados en aproximadamente 25%.</li>
+        <li>Desarrollé una aplicación Android con Chaquopy y OpenCV para captura, recorte y clasificación en tiempo real, reduciendo el flujo manual de 6 a 2 pasos.</li>
+        <li>Implementé persistencia en SQLite con historial trazable y estandaricé documentación y pruebas, disminuyendo el tiempo de testeo en 30%.</li>
+      </ul>
+    </article>
+    <article class="entry">
+      <div class="entry-head">
+        <p class="entry-title">Desarrollador web — Proyecto aplicado, Granja Santa Luisa</p>
+        <p class="entry-date">2025</p>
+      </div>
+      <div class="entry-sub"><p>Digitalización de procesos para MiPyme avícola</p><p>Concepción</p></div>
+      <ul>
+        <li>Levanté requisitos con usuarios no técnicos y modelé flujos de inventario, ventas y control sanitario que se gestionaban mediante registros manuales.</li>
+        <li>Convertí los procesos observados en módulos, reglas de negocio y automatizaciones para el Sistema Avícola IECI.</li>
+      </ul>
+    </article>
+  </section>
+
+  <section>
+    <h2>Proyectos seleccionados</h2>
+    <article class="entry">
+      <div class="entry-head">
+        <p class="entry-title">Industrial Commerce — E-commerce B2B full-stack</p>
+        <p class="entry-date">2026</p>
+      </div>
+      <p class="stack">Next.js · TypeScript · Express · Supabase · Vercel</p>
+      <ul>
+        <li>Construí una demostración funcional con catálogo, compra directa, solicitudes de cotización y lógica de negocio integrada.</li>
+        <li>Implementé un panel administrativo explorable en modo de solo lectura para demostrar la operación sin exponer acciones destructivas.</li>
+      </ul>
+      <p class="project-links"><a href="https://industrial-commerce-web.vercel.app">Demo</a> · <a href="https://www.andrestorres.cl/proyectos/industrial-commerce/">Caso de estudio</a></p>
+    </article>
+    <article class="entry">
+      <div class="entry-head">
+        <p class="entry-title">Sistema de Gestión Avícola IECI — Proyecto de título</p>
+        <p class="entry-date">2025</p>
+      </div>
+      <p class="stack">React · TypeScript · Node.js · Express · PostgreSQL · Supabase · Docker</p>
+      <ul>
+        <li>Diseñé y desarrollé una SPA y API REST para centralizar inventario, ventas, control sanitario y reportes en cuatro módulos.</li>
+        <li>Implementé autenticación, tres roles, trazabilidad por usuario y políticas de acceso; preparé despliegues reproducibles con Docker, Debian, Nginx y PM2.</li>
+      </ul>
+      <p class="project-links"><a href="https://github.com/Sdraen/avicola-app">Código</a> · <a href="https://www.andrestorres.cl/proyectos/sistema-avicola-ieci/">Caso de estudio</a></p>
+    </article>
+  </section>
+
+  <section>
+    <h2>Habilidades técnicas</h2>
+    <div class="skills">
+      <p><strong>Lenguajes:</strong> TypeScript, JavaScript, Python, SQL</p>
+      <p><strong>Frontend:</strong> React, Next.js, HTML, CSS</p>
+      <p><strong>Backend y datos:</strong> Node.js, Express, API REST, PostgreSQL, Supabase, SQLite</p>
+      <p><strong>Herramientas:</strong> Git, GitHub, Docker, Linux, Nginx, PM2, BPMN, UML</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Educación</h2>
+    <div class="education">
+      <p><strong>Universidad del Bío-Bío</strong><br>Ingeniería de Ejecución en Computación e Informática</p>
+      <p>2019 – sep. 2025</p>
+    </div>
+  </section>
+</body>
+</html>
