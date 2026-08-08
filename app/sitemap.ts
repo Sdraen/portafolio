@@ -1,21 +1,22 @@
 import type { MetadataRoute } from "next"
+import { caseStudyHref, locales, localizedPath, projectSlugs } from "@/lib/i18n"
 
 const baseUrl = "https://www.andrestorres.cl"
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: "monthly", priority: 1 },
+  const lastModified = new Date()
+  return locales.flatMap(locale => [
     {
-      url: `${baseUrl}/proyectos/industrial-commerce/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
+      url: `${baseUrl}${localizedPath(locale)}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: locale === "es" ? 1 : 0.9,
     },
-    {
-      url: `${baseUrl}/proyectos/sistema-avicola-ieci/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-  ]
+    ...projectSlugs.map(slug => ({
+      url: `${baseUrl}${caseStudyHref(locale, slug)}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
+  ])
 }
