@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter, JetBrains_Mono } from "next/font/google"
 import { Analytics } from "@/components/analytics"
+import { languageAlternates } from "@/lib/i18n"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" })
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
     template: "%s | Andrés Torres",
   },
   description: "Portafolio de Andrés Torres, desarrollador full-stack en Chile. Proyectos web con React, Next.js, TypeScript, Node.js y PostgreSQL.",
-  alternates: { canonical: "/" },
+  alternates: { canonical: "/", languages: languageAlternates() },
   openGraph: {
     type: "website",
     locale: "es_CL",
