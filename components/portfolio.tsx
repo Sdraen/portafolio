@@ -136,6 +136,8 @@ function CursorGlow({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: M
 export function Portfolio({ locale }: { locale: Locale }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const content = homeCopy[locale]
+  const cvHref = locale === "es" ? "/cv-andres-torres.pdf" : "/cv-andres-torres-en.pdf"
+  const cvFilename = locale === "es" ? "Andres-Torres-CV.pdf" : "Andres-Torres-CV-EN.pdf"
   const mouseX = useMotionValue(-400)
   const mouseY = useMotionValue(-400)
   const { scrollYProgress } = useScroll()
@@ -153,7 +155,7 @@ export function Portfolio({ locale }: { locale: Locale }) {
         <header className="topbar-wrap">
           <m.nav className="topbar" initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, ease }} aria-label={content.nav.aria}>
             <a className="brand" href={homeSectionHref(locale, "inicio")} aria-label={content.nav.home}><span>AT</span><i /></a>
-            <div className="nav-links"><a href="#sobre-mi">{content.nav.about}</a><a href="#proyectos">{content.nav.projects}</a><a href="/cv-andres-torres.pdf" download>{content.nav.cv}</a><a href="#contacto">{content.nav.contact}</a></div>
+            <div className="nav-links"><a href="#sobre-mi">{content.nav.about}</a><a href="#proyectos">{content.nav.projects}</a><a href={cvHref} download={cvFilename}>{content.nav.cv}</a><a href="#contacto">{content.nav.contact}</a></div>
             <div className="topbar-actions">
               <a className="nav-status" href="#contacto"><i /> {content.nav.available}</a>
               <LanguageSwitcher locale={locale} label={content.languageLabel} />
@@ -161,7 +163,7 @@ export function Portfolio({ locale }: { locale: Locale }) {
             </div>
           </m.nav>
           {menuOpen && <m.div className="mobile-menu" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            {[[content.nav.about, "#sobre-mi"], [content.nav.projects, "#proyectos"], [content.hero.downloadCv, "/cv-andres-torres.pdf"], [content.nav.contact, "#contacto"]].map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}<ArrowDownRight /></a>)}
+            {[[content.nav.about, "#sobre-mi"], [content.nav.projects, "#proyectos"], [content.hero.downloadCv, cvHref], [content.nav.contact, "#contacto"]].map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}<ArrowDownRight /></a>)}
           </m.div>}
         </header>
 
@@ -180,7 +182,7 @@ export function Portfolio({ locale }: { locale: Locale }) {
                 <div className="hero-intro"><span className="intro-line" /><p>{content.hero.introBefore} <strong>Andrés Torres</strong>, {content.hero.introAfter}</p></div>
                 <div className="hero-actions">
                   <MagneticLink href="#proyectos" className="button button-primary">{content.hero.explore} <ArrowDownRight /></MagneticLink>
-                  <MagneticLink href="/cv-andres-torres.pdf" download="Andres-Torres-CV.pdf" className="button button-ghost">{content.hero.downloadCv} <span>↓</span></MagneticLink>
+                  <MagneticLink href={cvHref} download={cvFilename} className="button button-ghost">{content.hero.downloadCv} <span>↓</span></MagneticLink>
                 </div>
               </m.div>
             </m.div>

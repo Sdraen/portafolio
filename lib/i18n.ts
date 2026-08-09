@@ -273,7 +273,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
   en: {
     languageLabel: "Change language",
     nav: { aria: "Main navigation", home: "Go to homepage", about: "About", projects: "Projects", cv: "CV", contact: "Contact", available: "Available for opportunities", openMenu: "Open menu", closeMenu: "Close menu" },
-    hero: { kicker: "Portfolio / 2026", location: "Concepción, CL", aria: "I build ideas that feel alive", line1: "I build ideas", line2: "that feel", emphasis: "alive.", introBefore: "I'm", introAfter: "a full-stack developer. I create fast, useful web products with an identity that stands out.", explore: "Explore projects", downloadCv: "Download CV (ES)", sticker: ["BUILT WITH", "CURIOSITY"] },
+    hero: { kicker: "Portfolio / 2026", location: "Concepción, CL", aria: "I build ideas that feel alive", line1: "I build ideas", line2: "that feel", emphasis: "alive.", introBefore: "I'm", introAfter: "a full-stack developer. I create fast, useful web products with an identity that stands out.", explore: "Explore projects", downloadCv: "Download CV", sticker: ["BUILT WITH", "CURIOSITY"] },
     tickerAria: "Core technologies",
     about: {
       eyebrow: "01 / ABOUT ME", title: "From a problem to a", emphasis: "clear experience.", large: "Engineering, design and attention to detail to build software that", largeEmphasis: "solves real problems.",
@@ -302,7 +302,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
   pt: {
     languageLabel: "Mudar idioma",
     nav: { aria: "Navegação principal", home: "Ir para o início", about: "Sobre mim", projects: "Projetos", cv: "CV", contact: "Contato", available: "Disponível para oportunidades", openMenu: "Abrir menu", closeMenu: "Fechar menu" },
-    hero: { kicker: "Portfólio / 2026", location: "Concepción, CL", aria: "Desenvolvo ideias que ganham vida", line1: "Desenvolvo ideias", line2: "que ganham", emphasis: "vida.", introBefore: "Sou", introAfter: "desenvolvedor full-stack. Crio produtos web rápidos, úteis e com uma identidade que se destaca.", explore: "Explorar projetos", downloadCv: "Baixar CV (ES)", sticker: ["FEITO COM", "CURIOSIDADE"] },
+    hero: { kicker: "Portfólio / 2026", location: "Concepción, CL", aria: "Desenvolvo ideias que ganham vida", line1: "Desenvolvo ideias", line2: "que ganham", emphasis: "vida.", introBefore: "Sou", introAfter: "desenvolvedor full-stack. Crio produtos web rápidos, úteis e com uma identidade que se destaca.", explore: "Explorar projetos", downloadCv: "Baixar CV (EN)", sticker: ["FEITO COM", "CURIOSIDADE"] },
     tickerAria: "Principais tecnologias",
     about: {
       eyebrow: "01 / SOBRE MIM", title: "Do problema a uma experiência", emphasis: "clara.", large: "Engenharia, design e atenção aos detalhes para criar software que", largeEmphasis: "resolve de verdade.", bio: "Formado em Engenharia de Computação pela Universidad del Bío-Bío. Sou especializado em aplicações web end-to-end, de interfaces bem acabadas a APIs e implantações confiáveis.", codeMindset: "curioso", codeFocus: "produtos úteis", codeLearning: "sempre", codeStatus: "pronto para construir",
@@ -328,7 +328,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
   fr: {
     languageLabel: "Changer de langue",
     nav: { aria: "Navigation principale", home: "Aller à l'accueil", about: "À propos", projects: "Projets", cv: "CV", contact: "Contact", available: "Disponible pour des opportunités", openMenu: "Ouvrir le menu", closeMenu: "Fermer le menu" },
-    hero: { kicker: "Portfolio / 2026", location: "Concepción, CL", aria: "Je développe des idées qui prennent vie", line1: "Je développe", line2: "des idées qui prennent", emphasis: "vie.", introBefore: "Je suis", introAfter: "développeur full-stack. Je crée des produits web rapides, utiles et dotés d'une identité qui se démarque.", explore: "Voir les projets", downloadCv: "Télécharger le CV (ES)", sticker: ["CRÉÉ AVEC", "CURIOSITÉ"] },
+    hero: { kicker: "Portfolio / 2026", location: "Concepción, CL", aria: "Je développe des idées qui prennent vie", line1: "Je développe", line2: "des idées qui prennent", emphasis: "vie.", introBefore: "Je suis", introAfter: "développeur full-stack. Je crée des produits web rapides, utiles et dotés d'une identité qui se démarque.", explore: "Voir les projets", downloadCv: "Télécharger le CV (EN)", sticker: ["CRÉÉ AVEC", "CURIOSITÉ"] },
     tickerAria: "Technologies principales",
     about: {
       eyebrow: "01 / À PROPOS", title: "Du problème à une expérience", emphasis: "claire.", large: "Ingénierie, design et souci du détail pour créer des logiciels qui", largeEmphasis: "résolvent de vrais problèmes.", bio: "Diplômé en génie informatique de l'Universidad del Bío-Bío. Je me spécialise dans les applications web de bout en bout, des interfaces soignées aux API et aux déploiements fiables.", codeMindset: "curieux", codeFocus: "produits utiles", codeLearning: "toujours", codeStatus: "prêt à construire",
