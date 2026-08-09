@@ -147,7 +147,7 @@ export function Portfolio({ locale }: { locale: Locale }) {
 
   return (
     <LazyMotion features={domAnimation}>
-      <div className="site-shell" onMouseMove={event => { mouseX.set(event.clientX - 250); mouseY.set(event.clientY - 250) }}>
+      <div className="site-shell" data-locale={locale} onMouseMove={event => { mouseX.set(event.clientX - 250); mouseY.set(event.clientY - 250) }}>
         <DocumentLanguage locale={locale} />
         <m.div className="scroll-progress" style={{ scaleX }} />
         <CursorGlow mouseX={mouseX} mouseY={mouseY} /><div className="noise" aria-hidden="true" />
