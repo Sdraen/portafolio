@@ -170,6 +170,9 @@ html[data-theme="dark"] .process-list article:hover p{color:rgba(17,17,15,.72)}
 html[data-theme="dark"] .case-button-primary{color:#11110f;background:var(--ink)}
 html[data-theme="dark"] .case-contact a,html[data-theme="dark"] .contact-button,html[data-theme="dark"] .contact-footer div a:hover{color:#11110f}
 html[data-theme="dark"] .proposal-form{background:#171814}
+html[data-theme="dark"] .form-footer button{color:#11110f;background:#f4f2ea;box-shadow:0 0 0 1px rgba(255,255,255,.14)}
+html[data-theme="dark"] .form-footer button:hover:not(:disabled){color:#11110f;background:var(--lime)}
+html[data-theme="dark"] .form-footer button:disabled{color:rgba(17,17,15,.72);background:rgba(244,242,234,.72);opacity:1}
 html[data-theme="dark"] .form-heading p,html[data-theme="dark"] .form-grid label>span i,html[data-theme="dark"] .form-footer p,html[data-theme="dark"] .turnstile-heading small{color:rgba(245,243,236,.58)}
 html[data-theme="dark"] .form-grid input,html[data-theme="dark"] .form-grid select,html[data-theme="dark"] .form-grid textarea{border-color:rgba(245,243,236,.2);background:#20211d}
 html[data-theme="dark"] .form-grid input::placeholder,html[data-theme="dark"] .form-grid textarea::placeholder{color:rgba(245,243,236,.4)}
