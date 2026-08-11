@@ -141,3 +141,45 @@
 
 @media(max-width:960px){.contact-inner.contact-layout{grid-template-columns:1fr;gap:55px}.contact-copy{position:static}.contact-layout .contact-copy h2{font-size:clamp(4rem,11vw,6.5rem)}}
 @media(max-width:680px){.contact-section{min-height:auto;padding-top:95px}.contact-inner.contact-layout{margin-bottom:75px;gap:42px}.contact-layout .contact-copy h2{font-size:clamp(3.25rem,14.5vw,4.4rem);line-height:.9}.proposal-form{padding:22px 18px;border-radius:21px;box-shadow:7px 8px 0 var(--lime)}.form-heading{align-items:flex-start;flex-direction:column;gap:7px}.form-grid{grid-template-columns:1fr}.form-message{grid-column:auto}.form-footer{align-items:stretch;flex-direction:column}.form-footer p{max-width:none}.form-footer button{width:100%}}
+
+/* Selector de tema y modo oscuro global. */
+.theme-toggle{position:relative;width:42px;height:42px;flex:none;padding:0;border:1px solid var(--line);border-radius:50%;background:rgba(255,255,255,.68);display:grid;place-items:center;cursor:pointer;transition:background .25s,border-color .25s,transform .25s}.theme-toggle:hover{transform:translateY(-2px)}.theme-toggle:disabled{cursor:default;opacity:.65}.theme-toggle-icons{position:relative;width:18px;height:18px}.theme-toggle-icons svg{position:absolute;inset:0;width:18px;height:18px;transition:opacity .25s,transform .35s}.theme-icon-sun{opacity:0;transform:rotate(-70deg) scale(.65)}.theme-icon-moon{opacity:1;transform:rotate(0) scale(1)}
+.turnstile-field{grid-column:1/-1;padding:14px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.42);display:grid;gap:12px}.turnstile-heading{display:flex;align-items:center;gap:8px}.turnstile-heading svg{width:17px;color:#267447}.turnstile-heading span{font-size:12px;font-weight:750}.turnstile-heading small{margin-left:auto;color:rgba(17,17,15,.5);font-size:10px}.turnstile-widget{width:100%;min-height:65px;overflow:hidden;border-radius:8px}.turnstile-widget>div{max-width:100%}
+
+html[data-theme="dark"]{color-scheme:dark;--ink:#f4f2ea;--paper:#11120f;--line:rgba(245,243,236,.18)}
+body{transition:background-color .3s,color .3s}
+html[data-theme="dark"] .theme-icon-sun{opacity:1;transform:rotate(0) scale(1)}
+html[data-theme="dark"] .theme-icon-moon{opacity:0;transform:rotate(70deg) scale(.65)}
+html[data-theme="dark"] .topbar{border-color:rgba(255,255,255,.14);background:rgba(17,18,15,.82);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+html[data-theme="dark"] .theme-toggle,html[data-theme="dark"] .language-switcher summary,html[data-theme="dark"] .case-nav-actions .language-switcher summary{background:rgba(255,255,255,.07)}
+html[data-theme="dark"] .nav-links a:hover{background:rgba(255,255,255,.09)}
+html[data-theme="dark"] .language-menu{background:#191a17;box-shadow:6px 7px 0 #050605}
+html[data-theme="dark"] .language-menu a:hover,html[data-theme="dark"] .language-menu a[aria-current="page"]{color:#11110f}
+html[data-theme="dark"] .language-menu a .language-code{color:rgba(245,243,236,.56)}
+html[data-theme="dark"] .hero-kicker span,html[data-theme="dark"] .hero-intro p,html[data-theme="dark"] .section-index,html[data-theme="dark"] .project-copy p,html[data-theme="dark"] .process-list p,html[data-theme="dark"] .case-hero-bottom>p,html[data-theme="dark"] .case-highlights span,html[data-theme="dark"] .case-content aside span,html[data-theme="dark"] .case-story article>span,html[data-theme="dark"] .case-story p{color:rgba(245,243,236,.68)}
+html[data-theme="dark"] .button-ghost{background:rgba(255,255,255,.05)}
+html[data-theme="dark"] .button-primary,html[data-theme="dark"] .nav-status,html[data-theme="dark"] .menu-button{color:#11110f}
+html[data-theme="dark"] .ticker,html[data-theme="dark"] .bento-story,html[data-theme="dark"] .contact-section,html[data-theme="dark"] .case-contact{color:white;background:#090a08}
+html[data-theme="dark"] :is(.hero-sticker,.mobile-menu,.bento-skill,.project-art,.case-visual){--ink:#11110f;--paper:#f5f3ec;--line:rgba(17,17,15,.16);color:#11110f}
+html[data-theme="dark"] .project-card,html[data-theme="dark"] .case-highlights article,html[data-theme="dark"] .case-story li,html[data-theme="dark"] .case-button{background:#1a1b18}
+html[data-theme="dark"] .project-card:hover{box-shadow:9px 11px 0 #050605}
+html[data-theme="dark"] .project-admin-link{color:white;background:#090a08;border-color:rgba(255,255,255,.18)}
+html[data-theme="dark"] .project-admin-link:hover{color:#11110f;background:var(--lime)}
+html[data-theme="dark"] .process-list article:hover{--ink:#11110f;color:#11110f}
+html[data-theme="dark"] .process-list article:hover p{color:rgba(17,17,15,.72)}
+html[data-theme="dark"] .case-button-primary{color:#11110f;background:var(--ink)}
+html[data-theme="dark"] .case-contact a,html[data-theme="dark"] .contact-button,html[data-theme="dark"] .contact-footer div a:hover{color:#11110f}
+html[data-theme="dark"] .proposal-form{background:#171814}
+html[data-theme="dark"] .form-heading p,html[data-theme="dark"] .form-grid label>span i,html[data-theme="dark"] .form-footer p,html[data-theme="dark"] .turnstile-heading small{color:rgba(245,243,236,.58)}
+html[data-theme="dark"] .form-grid input,html[data-theme="dark"] .form-grid select,html[data-theme="dark"] .form-grid textarea{border-color:rgba(245,243,236,.2);background:#20211d}
+html[data-theme="dark"] .form-grid input::placeholder,html[data-theme="dark"] .form-grid textarea::placeholder{color:rgba(245,243,236,.4)}
+html[data-theme="dark"] .form-grid input:hover:not(:focus),html[data-theme="dark"] .form-grid select:hover:not(:focus),html[data-theme="dark"] .form-grid textarea:hover:not(:focus){border-color:rgba(245,243,236,.4)}
+html[data-theme="dark"] .turnstile-field{background:rgba(255,255,255,.04)}
+html[data-theme="dark"] .turnstile-heading svg{color:#82cf9b}
+html[data-theme="dark"] .form-success{color:#a4e8b6}
+html[data-theme="dark"] .form-error{color:#ffaaaa}
+html[data-theme="dark"] ::selection{color:#11110f}
+
+@media(max-width:680px){.theme-toggle{width:41px;height:41px}.topbar-actions{gap:6px}.turnstile-field{padding:11px}.turnstile-heading{align-items:flex-start;flex-wrap:wrap}.turnstile-heading small{width:100%;margin-left:25px}}
+
+@media(prefers-reduced-motion:reduce){body,.theme-toggle,.theme-toggle-icons svg{transition:none!important}.form-decor-a,.form-decor-b{animation:none!important}}
