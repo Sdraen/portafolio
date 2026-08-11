@@ -1,0 +1,17 @@
+{
+  "name": "andrestorres-contact-form",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-01",
+  "routes": [
+    {
+      "pattern": "contact.andrestorres.cl",
+      "custom_domain": true
+    }
+  ],
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "ALLOWED_ORIGINS": "https://www.andrestorres.cl,https://andrestorres.cl"
+  }
+}

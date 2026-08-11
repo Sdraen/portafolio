@@ -13,6 +13,7 @@ import { useState, type MouseEvent, type ReactNode } from "react"
 import { ContactForm } from "@/components/contact-form"
 import { DocumentLanguage } from "@/components/document-language"
 import { LanguageSwitcher } from "@/components/language-switcher"
+import { ThemeToggle } from "@/components/theme-toggle"
 import {
   caseStudyHref, homeCopy, homeSectionHref, type HomeProject, type Locale,
 } from "@/lib/i18n"
@@ -159,6 +160,7 @@ export function Portfolio({ locale }: { locale: Locale }) {
             <div className="topbar-actions">
               <a className="nav-status" href="#contacto"><i /> {content.nav.available}</a>
               <LanguageSwitcher locale={locale} label={content.languageLabel} />
+              <ThemeToggle locale={locale} />
               <button className="menu-button" onClick={() => setMenuOpen(open => !open)} aria-label={menuOpen ? content.nav.closeMenu : content.nav.openMenu} aria-expanded={menuOpen}>{menuOpen ? <X /> : <Menu />}</button>
             </div>
           </m.nav>

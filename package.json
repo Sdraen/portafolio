@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:pages": "shx rm -rf docs && next build && shx mv out docs && shx cp -f CNAME docs/CNAME && shx touch docs/.nojekyll"
+    "build:pages": "shx rm -rf docs && next build && shx mv out docs && shx cp -f CNAME docs/CNAME && shx touch docs/.nojekyll",
+    "worker:dev": "wrangler dev --config worker/wrangler.jsonc",
+    "worker:deploy": "wrangler deploy --config worker/wrangler.jsonc"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -69,6 +71,7 @@
     "shx": "^0.4.0",
     "tailwindcss": "^4.1.9",
     "tw-animate-css": "1.3.3",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "4.20.0"
   }
 }

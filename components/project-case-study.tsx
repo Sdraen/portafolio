@@ -3,6 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { DocumentLanguage } from "@/components/document-language"
 import { LanguageSwitcher } from "@/components/language-switcher"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { caseUi, type CaseStudyContent } from "@/lib/case-studies"
 import {
   homeCopy, homeSectionHref, type Locale, type ProjectSlug,
@@ -26,6 +27,7 @@ export function ProjectCaseStudy({ locale, slug, content }: {
         <Link href={homeSectionHref(locale, "proyectos")}><ArrowLeft /> {ui.back}</Link>
         <div className="case-nav-actions">
           <LanguageSwitcher locale={locale} path={`proyectos/${slug}`} label={homeCopy[locale].languageLabel} />
+          <ThemeToggle locale={locale} />
           <Link href={homeSectionHref(locale, "contacto")}>{ui.available} <i /></Link>
         </div>
       </nav>
