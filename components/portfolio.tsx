@@ -62,8 +62,19 @@ function CvDownloadDialog({ open, copy, href, filename, onClose, returnFocusRef 
   useEffect(() => {
     if (!open) return
 
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = "hidden"
+    const body = document.body
+    const root = document.documentElement
+    const previousOverflow = body.style.overflow
+    const previousPaddingRight = body.style.paddingRight
+    const previousCompensation = root.style.getPropertyValue("--scrollbar-compensation")
+    const previousScrollLocked = body.dataset.scrollLocked
+    const scrollbarWidth = Math.max(0, window.innerWidth - root.clientWidth)
+    const currentPaddingRight = Number.parseFloat(window.getComputedStyle(body).paddingRight) || 0
+
+    root.style.setProperty("--scrollbar-compensation", `${scrollbarWidth}px`)
+    body.dataset.scrollLocked = "true"
+    body.style.overflow = "hidden"
+    if (scrollbarWidth > 0) body.style.paddingRight = `${currentPaddingRight + scrollbarWidth}px`
     const focusTimer = window.setTimeout(() => cancelRef.current?.focus(), 50)
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose()
@@ -72,7 +83,12 @@ function CvDownloadDialog({ open, copy, href, filename, onClose, returnFocusRef 
 
     return () => {
       window.clearTimeout(focusTimer)
-      document.body.style.overflow = previousOverflow
+      body.style.overflow = previousOverflow
+      body.style.paddingRight = previousPaddingRight
+      if (previousCompensation) root.style.setProperty("--scrollbar-compensation", previousCompensation)
+      else root.style.removeProperty("--scrollbar-compensation")
+      if (previousScrollLocked === undefined) delete body.dataset.scrollLocked
+      else body.dataset.scrollLocked = previousScrollLocked
       document.removeEventListener("keydown", closeOnEscape)
       returnFocusRef.current?.focus()
     }
