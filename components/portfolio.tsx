@@ -1,21 +1,21 @@
 "use client"
 
 import {
-  ArrowDownRight, ArrowUpRight, Asterisk, Braces, Github, Layers3, Linkedin,
-  Mail, MapPin, Menu, MousePointer2, Sparkles, X, Zap,
+  ArrowDownRight, ArrowUpRight, Asterisk, Braces, Download, FileText, Github,
+  Layers3, Linkedin, Mail, MapPin, Menu, MousePointer2, Sparkles, X, Zap,
 } from "lucide-react"
 import {
-  LazyMotion, domAnimation, m, useMotionValue, useReducedMotion, useScroll,
-  useSpring, useTransform, type MotionValue,
+  AnimatePresence, LazyMotion, domAnimation, m, useMotionValue, useReducedMotion,
+  useScroll, useSpring, useTransform, type MotionValue,
 } from "framer-motion"
 import Image from "next/image"
-import { useState, type MouseEvent, type ReactNode } from "react"
+import { useEffect, useRef, useState, type MouseEvent, type MutableRefObject, type ReactNode } from "react"
 import { ContactForm } from "@/components/contact-form"
 import { DocumentLanguage } from "@/components/document-language"
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { ThemeToggle } from "@/components/theme-toggle"
 import {
-  caseStudyHref, homeCopy, homeSectionHref, type HomeProject, type Locale,
+  caseStudyHref, homeCopy, homeSectionHref, type CvDownloadCopy, type HomeProject, type Locale,
 } from "@/lib/i18n"
 
 const stack = ["REACT", "NEXT.JS", "TYPESCRIPT", "NODE.JS", "EXPRESS", "POSTGRESQL", "SUPABASE", "DOCKER", "GIT"]
@@ -25,8 +25,9 @@ const reveal = {
   viewport: { once: true, amount: 0.2 }, transition: { duration: 0.75, ease },
 }
 
-function MagneticLink({ href, children, className = "", external = false, download }: {
+function MagneticLink({ href, children, className = "", external = false, download, onClick }: {
   href: string; children: ReactNode; className?: string; external?: boolean; download?: string
+  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void
 }) {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
@@ -38,12 +39,84 @@ function MagneticLink({ href, children, className = "", external = false, downlo
     y.set((event.clientY - rect.top - rect.height / 2) * 0.14)
   }
   return (
-    <m.a href={href} className={className} style={{ x: springX, y: springY }} onMouseMove={move}
+    <m.a href={href} className={className} style={{ x: springX, y: springY }} onMouseMove={move} onClick={onClick}
       onMouseLeave={() => { x.set(0); y.set(0) }}
       {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
       {...(download ? { download } : {})}>
       {children}
     </m.a>
+  )
+}
+
+function CvDownloadDialog({ open, copy, href, filename, onClose, returnFocusRef }: {
+  open: boolean
+  copy: CvDownloadCopy
+  href: string
+  filename: string
+  onClose: () => void
+  returnFocusRef: MutableRefObject<HTMLAnchorElement | null>
+}) {
+  const cancelRef = useRef<HTMLButtonElement>(null)
+  const reduceMotion = useReducedMotion()
+
+  useEffect(() => {
+    if (!open) return
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    const focusTimer = window.setTimeout(() => cancelRef.current?.focus(), 50)
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose()
+    }
+    document.addEventListener("keydown", closeOnEscape)
+
+    return () => {
+      window.clearTimeout(focusTimer)
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener("keydown", closeOnEscape)
+      returnFocusRef.current?.focus()
+    }
+  }, [onClose, open, returnFocusRef])
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <m.div
+          className="cv-dialog-backdrop"
+          data-cv-dialog
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: reduceMotion ? 0 : .22 }}
+          onMouseDown={event => { if (event.target === event.currentTarget) onClose() }}
+        >
+          <m.div
+            className="cv-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cv-dialog-title"
+            aria-describedby="cv-dialog-description"
+            initial={reduceMotion ? false : { opacity: 0, y: 28, scale: .94, rotate: -1.5 }}
+            animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 18, scale: .96 }}
+            transition={{ duration: reduceMotion ? 0 : .38, ease }}
+          >
+            <span className="cv-dialog-glow" aria-hidden="true" />
+            <button className="cv-dialog-close" type="button" onClick={onClose} aria-label={copy.close}><X /></button>
+            <div className="cv-dialog-icon" aria-hidden="true"><FileText /></div>
+            <p className="cv-dialog-eyebrow">{copy.eyebrow}</p>
+            <h2 id="cv-dialog-title">{copy.title}</h2>
+            <p id="cv-dialog-description" className="cv-dialog-description">{copy.body}</p>
+            <div className="cv-dialog-actions">
+              <button ref={cancelRef} type="button" onClick={onClose}>{copy.cancel}</button>
+              <a href={href} download={filename} onClick={onClose} data-cv-download-confirm>
+                <Download /> {copy.confirm}
+              </a>
+            </div>
+          </m.div>
+        </m.div>
+      )}
+    </AnimatePresence>
   )
 }
 
@@ -136,6 +209,8 @@ function CursorGlow({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: M
 
 export function Portfolio({ locale }: { locale: Locale }) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [cvDialogOpen, setCvDialogOpen] = useState(false)
+  const cvTriggerRef = useRef<HTMLAnchorElement | null>(null)
   const content = homeCopy[locale]
   const cvHref = locale === "es" ? "/cv-andres-torres.pdf" : "/cv-andres-torres-en.pdf"
   const cvFilename = locale === "es" ? "Andres-Torres-CV.pdf" : "Andres-Torres-CV-EN.pdf"
@@ -145,6 +220,13 @@ export function Portfolio({ locale }: { locale: Locale }) {
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 25, restDelta: 0.001 })
   const heroY = useTransform(scrollYProgress, [0, 0.18], [0, 120])
   const heroOpacity = useTransform(scrollYProgress, [0, 0.14], [1, 0.15])
+
+  function requestCvDownload(event: MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault()
+    cvTriggerRef.current = event.currentTarget
+    setMenuOpen(false)
+    setCvDialogOpen(true)
+  }
 
   return (
     <LazyMotion features={domAnimation}>
@@ -156,7 +238,7 @@ export function Portfolio({ locale }: { locale: Locale }) {
         <header className="topbar-wrap">
           <m.nav className="topbar" initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, ease }} aria-label={content.nav.aria}>
             <a className="brand" href={homeSectionHref(locale, "inicio")} aria-label={content.nav.home}><span>AT</span><i /></a>
-            <div className="nav-links"><a href="#sobre-mi">{content.nav.about}</a><a href="#proyectos">{content.nav.projects}</a><a href={cvHref} download={cvFilename}>{content.nav.cv}</a><a href="#contacto">{content.nav.contact}</a></div>
+            <div className="nav-links"><a href="#sobre-mi">{content.nav.about}</a><a href="#proyectos">{content.nav.projects}</a><a href={cvHref} download={cvFilename} onClick={requestCvDownload}>{content.nav.cv}</a><a href="#contacto">{content.nav.contact}</a></div>
             <div className="topbar-actions">
               <a className="nav-status" href="#contacto"><i /> {content.nav.available}</a>
               <LanguageSwitcher locale={locale} label={content.languageLabel} />
@@ -165,9 +247,11 @@ export function Portfolio({ locale }: { locale: Locale }) {
             </div>
           </m.nav>
           {menuOpen && <m.div className="mobile-menu" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-            {[[content.nav.about, "#sobre-mi"], [content.nav.projects, "#proyectos"], [content.hero.downloadCv, cvHref], [content.nav.contact, "#contacto"]].map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}<ArrowDownRight /></a>)}
+            {[[content.nav.about, "#sobre-mi"], [content.nav.projects, "#proyectos"], [content.hero.downloadCv, cvHref], [content.nav.contact, "#contacto"]].map(([label, href]) => <a key={href} href={href} onClick={event => href === cvHref ? requestCvDownload(event) : setMenuOpen(false)}>{label}<ArrowDownRight /></a>)}
           </m.div>}
         </header>
+
+        <CvDownloadDialog open={cvDialogOpen} copy={content.cvDownload} href={cvHref} filename={cvFilename} onClose={() => setCvDialogOpen(false)} returnFocusRef={cvTriggerRef} />
 
         <main>
           <section id="inicio" className="hero-section">
@@ -184,7 +268,7 @@ export function Portfolio({ locale }: { locale: Locale }) {
                 <div className="hero-intro"><span className="intro-line" /><p>{content.hero.introBefore} <strong>Andrés Torres</strong>, {content.hero.introAfter}</p></div>
                 <div className="hero-actions">
                   <MagneticLink href="#proyectos" className="button button-primary">{content.hero.explore} <ArrowDownRight /></MagneticLink>
-                  <MagneticLink href={cvHref} download={cvFilename} className="button button-ghost">{content.hero.downloadCv} <span>↓</span></MagneticLink>
+                  <MagneticLink href={cvHref} download={cvFilename} className="button button-ghost" onClick={requestCvDownload}>{content.hero.downloadCv} <span>↓</span></MagneticLink>
                 </div>
               </m.div>
             </m.div>

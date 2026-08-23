@@ -103,6 +103,15 @@ export type ContactFormCopy = {
   subject: string
 }
 
+export type CvDownloadCopy = {
+  eyebrow: string
+  title: string
+  body: string
+  cancel: string
+  confirm: string
+  close: string
+}
+
 export type HomeProject = {
   number: string
   title: string
@@ -142,6 +151,7 @@ type HomeCopy = {
     downloadCv: string
     sticker: [string, string]
   }
+  cvDownload: CvDownloadCopy
   tickerAria: string
   about: {
     eyebrow: string
@@ -212,6 +222,14 @@ export const homeCopy: Record<Locale, HomeCopy> = {
       downloadCv: "Descargar CV",
       sticker: ["HECHO EN", "CONCEPCIÓN"],
     },
+    cvDownload: {
+      eyebrow: "CURRÍCULUM",
+      title: "¿Deseas descargar mi CV?",
+      body: "El archivo PDF se guardará en tu dispositivo para que puedas revisarlo cuando quieras.",
+      cancel: "Ahora no",
+      confirm: "Descargar CV",
+      close: "Cerrar confirmación de descarga",
+    },
     tickerAria: "Tecnologías principales",
     about: {
       eyebrow: "01 / SOBRE MÍ",
@@ -278,6 +296,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
     languageLabel: "Change language",
     nav: { aria: "Main navigation", home: "Go to homepage", about: "About", projects: "Projects", cv: "CV", contact: "Contact", available: "Available for software roles and projects", openMenu: "Open menu", closeMenu: "Close menu" },
     hero: { kicker: "Portfolio / 2026", location: "Concepción, CL", aria: "I build software for real-world operations", line1: "I build software", line2: "for real-world", emphasis: "operations.", introBefore: "I'm", introAfter: "a full-stack developer based in Concepción. I design web applications that organize workflows, connect data and reduce manual work.", explore: "Explore projects", downloadCv: "Download CV", sticker: ["BUILT IN", "CONCEPCIÓN"] },
+    cvDownload: { eyebrow: "RESUME", title: "Would you like to download my resume?", body: "The PDF will be saved to your device so you can review it whenever you need it.", cancel: "Not now", confirm: "Download resume", close: "Close download confirmation" },
     tickerAria: "Core technologies",
     about: {
       eyebrow: "01 / ABOUT ME", title: "Software grounded in", emphasis: "operations.", large: "I build software around the work itself:", largeEmphasis: "people, data and decisions.",
@@ -307,6 +326,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
     languageLabel: "Mudar idioma",
     nav: { aria: "Navegação principal", home: "Ir para o início", about: "Sobre mim", projects: "Projetos", cv: "CV", contact: "Contato", available: "Disponível para projetos e vagas", openMenu: "Abrir menu", closeMenu: "Fechar menu" },
     hero: { kicker: "Portfólio / 2026", location: "Concepción, CL", aria: "Construo software para operações reais", line1: "Construo software", line2: "para operações", emphasis: "reais.", introBefore: "Sou", introAfter: "desenvolvedor full-stack de Concepción. Crio aplicações web que organizam processos, conectam dados e reduzem o trabalho manual.", explore: "Explorar projetos", downloadCv: "Baixar CV (EN)", sticker: ["FEITO EM", "CONCEPCIÓN"] },
+    cvDownload: { eyebrow: "CURRÍCULO", title: "Deseja baixar meu currículo em inglês?", body: "O arquivo PDF em inglês será salvo no seu dispositivo para consulta.", cancel: "Agora não", confirm: "Baixar CV (EN)", close: "Fechar confirmação de download" },
     tickerAria: "Principais tecnologias",
     about: {
       eyebrow: "01 / SOBRE MIM", title: "Software com contexto", emphasis: "operacional.", large: "Construo software a partir do trabalho real:", largeEmphasis: "pessoas, dados e decisões.", bio: "Sou formado em Engenharia de Computação pela Universidad del Bío-Bío e moro em Concepción, Chile. Minha experiência vem da construção de sistemas completos: do levantamento de requisitos e modelagem de processos à interface, API, dados e implantação.", codeMindset: "analítico", codeFocus: "processos reais", codeLearning: "contínuo", codeStatus: "disponível para contribuir",
@@ -333,6 +353,7 @@ export const homeCopy: Record<Locale, HomeCopy> = {
     languageLabel: "Changer de langue",
     nav: { aria: "Navigation principale", home: "Aller à l'accueil", about: "À propos", projects: "Projets", cv: "CV", contact: "Contact", available: "Disponible pour des postes et projets", openMenu: "Ouvrir le menu", closeMenu: "Fermer le menu" },
     hero: { kicker: "Portfolio / 2026", location: "Concepción, CL", aria: "Je développe des logiciels pour des opérations réelles", line1: "Je développe", line2: "des logiciels pour", emphasis: "le terrain.", introBefore: "Je suis", introAfter: "développeur full-stack établi à Concepción. Je conçois des applications web qui structurent les processus, relient les données et réduisent le travail manuel.", explore: "Voir les projets", downloadCv: "Télécharger le CV (EN)", sticker: ["CRÉÉ À", "CONCEPCIÓN"] },
+    cvDownload: { eyebrow: "CV", title: "Souhaitez-vous télécharger mon CV en anglais ?", body: "Le fichier PDF en anglais sera enregistré sur votre appareil pour consultation.", cancel: "Pas maintenant", confirm: "Télécharger le CV (EN)", close: "Fermer la confirmation de téléchargement" },
     tickerAria: "Technologies principales",
     about: {
       eyebrow: "01 / À PROPOS", title: "Des logiciels ancrés dans", emphasis: "les opérations.", large: "Je construis des logiciels à partir du travail réel :", largeEmphasis: "les personnes, les données et les décisions.", bio: "Je suis diplômé en génie informatique de l'Universidad del Bío-Bío et je vis à Concepción, au Chili. Mon expérience vient de la construction de systèmes complets : de la collecte des besoins et la modélisation des processus jusqu'à l'interface, l'API, les données et le déploiement.", codeMindset: "analytique", codeFocus: "processus réels", codeLearning: "continu", codeStatus: "disponible pour contribuer",
