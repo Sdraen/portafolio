@@ -1,16 +1,13 @@
 "use client"
 
-import { AlertCircle, CheckCircle2, LoaderCircle, Send, ShieldCheck } from "lucide-react"
+import { AlertCircle, CheckCircle2, LoaderCircle, Send } from "lucide-react"
 import { AnimatePresence, m, useReducedMotion } from "framer-motion"
-import { useTheme } from "next-themes"
 import { useState, type FormEvent } from "react"
-import { TurnstileWidget } from "@/components/turnstile-widget"
 import type { ContactFormCopy } from "@/lib/i18n"
 
 type FormStatus = "idle" | "sending" | "success" | "error"
 
-const contactEndpoint = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT
-const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY
 
 const fieldVariants = {
   hidden: { opacity: 0, y: 14 },
@@ -26,52 +23,30 @@ const gridVariants = {
 export function ContactForm({ copy }: { copy: ContactFormCopy }) {
   const [inquiryType, setInquiryType] = useState("")
   const [status, setStatus] = useState<FormStatus>("idle")
-  const [errorMessage, setErrorMessage] = useState(copy.error)
-  const [turnstileToken, setTurnstileToken] = useState("")
-  const [turnstileResetKey, setTurnstileResetKey] = useState(0)
   const reduceMotion = useReducedMotion()
-  const { resolvedTheme } = useTheme()
-  const protectedEndpoint = Boolean(contactEndpoint && turnstileSiteKey)
-  const isConfigured = protectedEndpoint
+  const isConfigured = Boolean(accessKey)
 
   async function submitForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (!isConfigured || status === "sending") return
-
-    if (protectedEndpoint && !turnstileToken) {
-      setErrorMessage(copy.verificationRequired)
-      setStatus("error")
-      return
-    }
+    if (!accessKey || status === "sending") return
 
     const form = event.currentTarget
     const formData = new FormData(form)
-    if (protectedEndpoint) formData.set("cf-turnstile-response", turnstileToken)
-    setErrorMessage(copy.error)
     setStatus("sending")
 
     try {
-      const response = await fetch(contactEndpoint!, {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         body: formData,
       })
-      const result = await response.json().catch(() => null) as { success?: boolean; code?: string; message?: string } | null
+      const result = await response.json().catch(() => null) as { success?: boolean; message?: string } | null
 
-      if (!response.ok || !result?.success) {
-        if (result?.code === "turnstile_failed") setErrorMessage(copy.verificationError)
-        throw new Error(result?.message || copy.error)
-      }
+      if (!response.ok || !result?.success) throw new Error(result?.message || copy.error)
 
       form.reset()
       setInquiryType("")
-      setTurnstileToken("")
-      setTurnstileResetKey(value => value + 1)
       setStatus("success")
     } catch {
-      if (protectedEndpoint) {
-        setTurnstileToken("")
-        setTurnstileResetKey(value => value + 1)
-      }
       setStatus("error")
     }
   }
@@ -92,6 +67,7 @@ export function ContactForm({ copy }: { copy: ContactFormCopy }) {
       <AnimatePresence>
         {status === "sending" && <m.span className="form-progress" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} exit={{ opacity: 0 }} transition={{ duration: 1.8, ease: "easeInOut" }} aria-hidden="true" />}
       </AnimatePresence>
+      <input type="hidden" name="access_key" value={accessKey ?? ""} />
       <input type="hidden" name="subject" value={copy.subject} />
       <input type="hidden" name="from_name" value="Portafolio de Andrés Torres" />
       <input className="contact-honeypot" type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" aria-hidden="true" />
@@ -146,31 +122,11 @@ export function ContactForm({ copy }: { copy: ContactFormCopy }) {
           <textarea name="message" placeholder={copy.messagePlaceholder} rows={5} minLength={20} maxLength={5000} required />
         </m.label>
 
-        {protectedEndpoint ? (
-          <m.div className="turnstile-field" variants={fieldVariants}>
-            <div className="turnstile-heading"><ShieldCheck /><span>{copy.verification}</span><small>{copy.verificationHint}</small></div>
-            <TurnstileWidget
-              siteKey={turnstileSiteKey!}
-              theme={resolvedTheme === "dark" ? "dark" : "light"}
-              resetKey={turnstileResetKey}
-              onVerify={token => {
-                setTurnstileToken(token)
-                if (status === "error") setStatus("idle")
-              }}
-              onExpire={() => setTurnstileToken("")}
-              onError={() => {
-                setTurnstileToken("")
-                setErrorMessage(copy.verificationError)
-                setStatus("error")
-              }}
-            />
-          </m.div>
-        ) : null}
       </m.div>
 
       <m.div className="form-footer" initial={reduceMotion ? false : { opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .5, duration: .4 }}>
         <p>{copy.privacy}</p>
-        <m.button type="submit" disabled={!isConfigured || status === "sending" || (protectedEndpoint && !turnstileToken)} whileHover={reduceMotion ? undefined : { y: -3, scale: 1.02 }} whileTap={reduceMotion ? undefined : { scale: .97 }}>
+        <m.button type="submit" disabled={!isConfigured || status === "sending"} whileHover={reduceMotion ? undefined : { y: -3, scale: 1.02 }} whileTap={reduceMotion ? undefined : { scale: .97 }}>
           {status === "sending" ? <LoaderCircle className="form-spinner" /> : <Send />}
           {status === "sending" ? copy.sending : copy.send}
         </m.button>
@@ -178,7 +134,7 @@ export function ContactForm({ copy }: { copy: ContactFormCopy }) {
 
       <AnimatePresence mode="popLayout">
         {status === "success" && <m.div className="form-notice form-success" role="status" initial={{ opacity: 0, y: 10, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -6 }}><CheckCircle2 /> {copy.success}</m.div>}
-        {status === "error" && <m.div className="form-notice form-error" role="alert" initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}><AlertCircle /> {errorMessage}</m.div>}
+        {status === "error" && <m.div className="form-notice form-error" role="alert" initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}><AlertCircle /> {copy.error}</m.div>}
       </AnimatePresence>
       {!isConfigured && <div className="form-notice form-error" role="alert"><AlertCircle /> {copy.unavailable}</div>}
     </m.form>
