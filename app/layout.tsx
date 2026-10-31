@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     default: "Andrés Torres | Desarrollador Full-Stack en Chile",
     template: "%s | Andrés Torres",
   },
-  description: "Portafolio de Andrés Torres, desarrollador full-stack en Chile. Proyectos web con React, Next.js, TypeScript, Node.js y PostgreSQL.",
+  description: "Portafolio de Andrés Torres, desarrollador full-stack en Chile. Proyectos web con React, Next.js, TypeScript, Node.js, WordPress y PostgreSQL.",
   alternates: { canonical: "/", languages: languageAlternates() },
   openGraph: {
     type: "website",
@@ -66,7 +66,7 @@ const structuredData = {
     "https://github.com/sdraen",
     "https://www.linkedin.com/in/andr%C3%A9s-felipe-torres-castro-016587327/",
   ],
-  knowsAbout: ["React", "Next.js", "TypeScript", "Node.js", "Express", "PostgreSQL", "Supabase", "Docker"],
+  knowsAbout: ["React", "Next.js", "TypeScript", "Node.js", "Express", "WordPress", "PostgreSQL", "Supabase", "Docker"],
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

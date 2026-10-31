@@ -18,7 +18,7 @@ import {
   caseStudyHref, homeCopy, homeSectionHref, type CvDownloadCopy, type HomeProject, type Locale,
 } from "@/lib/i18n"
 
-const stack = ["REACT", "NEXT.JS", "TYPESCRIPT", "NODE.JS", "EXPRESS", "POSTGRESQL", "SUPABASE", "DOCKER", "GIT"]
+const stack = ["REACT", "NEXT.JS", "TYPESCRIPT", "NODE.JS", "EXPRESS", "WORDPRESS", "POSTGRESQL", "SUPABASE", "DOCKER", "GIT"]
 const ease = [0.16, 1, 0.3, 1] as const
 const reveal = {
   initial: { opacity: 0, y: 34 }, whileInView: { opacity: 1, y: 0 },
